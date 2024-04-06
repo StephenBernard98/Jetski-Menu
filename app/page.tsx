@@ -14,11 +14,6 @@ const inter = Inter({
   subsets: ["latin"],
   display: "swap",
 });
-export const roboto_mono = Roboto_Mono({
-  subsets: ["latin"],
-  display: "swap",
-  weight: "700",
-});
 
 export default function Home() {
   const [showLogo, setShowLogo] = useState(true);
