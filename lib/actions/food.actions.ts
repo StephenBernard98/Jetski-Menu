@@ -72,7 +72,7 @@ export async function updateFood({ userId, food, path }: UpdateFoodParams) {
     await connectToDatabase();
 
     const foodToUpdate = await Food.findById(food._id);
-    if (!foodToUpdate || foodToUpdate.organizer.toHexString() !== userId) {
+    if (!foodToUpdate) {
       throw new Error("Unauthorized or food not found");
     }
 

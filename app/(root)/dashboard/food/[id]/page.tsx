@@ -8,6 +8,7 @@ import Image from "next/image";
 import { GiChiliPepper } from "react-icons/gi";
 import { FaRegGrinTongueWink } from "react-icons/fa";
 import Link from "next/link";
+import { DeleteConfirmation } from "@/components/shared/DeleteConfirmation";
 
 const FoodDetails = async ({
   params: { id },
@@ -23,17 +24,28 @@ const FoodDetails = async ({
 
   return (
     <>
-      <section className="max-w-[1250px] mx-auto mt-3 rounded-xl flex justify-center bg-gray-200 bg-contain">
-        <div className="flex justify-center items-center">
+      <section className="lg:max-w-[1250px] lg:mx-auto mt-3 rounded-xl flex justify-center bg-gray-200 bg-contain mx-1 md:mx-3 relative">
+        <div className="flex flex-col md:flex-row justify-center items-center p-2 ">
           <Image
             src={food.imageUrl}
             alt="hero image"
             width={700}
             height={700}
-            className=" w-full min-h-[300px] object-cover object-center p-3 rounded-lg"
+            className=" md:w-1/2 lg:w-full w-full min-h-[300px] object-cover object-center md:mr-2  rounded-lg"
           />
+          <div className="absolute right-3 md:right-2 top-3 md:top-2 flex flex-col gap-[0.12rem] rounded-xl bg-white p-2 shadow-sm transition-all">
+            <Link href={`/dashboard/food/${food._id}/update`}>
+              <Image
+                src="/assets/icons/edit.svg"
+                alt="edit"
+                width={20}
+                height={20}
+              />
+            </Link>
+            <DeleteConfirmation foodId={food._id} />
+          </div>
 
-          <div className="flex w-full flex-col font-bold gap-8 text-xl">
+          <div className="flex w-full flex-col font-bold gap-8 text-lg md:text-xl ">
             <div className="flex flex-col gap-6">
               <div className="mt-4 flex ">
                 <span className="font-bold mr-3">Food name:</span>
@@ -91,12 +103,19 @@ const FoodDetails = async ({
 
       {/* FOOD with the same category */}
       <section className=" my-2 flex flex-col gap-2 max-w-[1250px] mx-auto md:gap-12">
-        <h2 className="font-bold text-xl my-3"> Related Food </h2>
+        <h2 className="font-bold text-center text-xl md:text-3xl lg:text-4xl my-3">
+          {" "}
+          <span className="text-blue-500">Related</span>
+          <span className="bg-black text-white px-5 py-[0.02rem] ml-2 rounded-lg">
+            {" "}
+            Food{" "}
+          </span>
+        </h2>
 
         <Collection
           data={relatedFood?.data}
           emptyTitle="No Food Found"
-          emptyStateSubtext="Come back later"
+          emptyStateSubtext="Add a Food"
           collectionType="All_Food"
           limit={3}
           page={searchParams.page as string}

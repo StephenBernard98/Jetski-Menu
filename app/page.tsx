@@ -7,6 +7,8 @@ import { Inter, Mooli, Roboto_Mono } from "next/font/google";
 import "./home.css";
 import Link from "next/link";
 import { SignedIn, SignedOut } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
+import { ThreeCircles } from "react-loader-spinner";
 
 const mooli = Mooli({ subsets: ["latin"], weight: "400" });
 
@@ -17,6 +19,10 @@ const inter = Inter({
 
 export default function Home() {
   const [showLogo, setShowLogo] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [foodIsLoading, setFoodIsLoading] = useState(false);
+  const [drinkIsLoading, setDrinkIsLoading] = useState(false);
+
   const [slideOut, setSlideOut] = useState(false);
 
   useEffect(() => {
@@ -26,6 +32,19 @@ export default function Home() {
 
     return () => clearTimeout(timer); // Cleanup function
   }, []);
+
+  const router = useRouter();
+
+  const load = () => {
+    setIsLoading(true);
+  };
+
+  const foodLoad = () => {
+    setFoodIsLoading(true);
+  };
+  const drinkLoad = () => {
+    setDrinkIsLoading(true);
+  };
 
   const heroStyle = {
     backgroundImage: `url(${bgImg.src})`,
@@ -72,7 +91,7 @@ export default function Home() {
             />
             <div className="flex justify-center">
               <button
-                className={`bg-blue-600 tracking-wider px-16 py-4 mt-7 rounded-lg hover:bg-blue-700 text-white z-30 font-bold font-roboto duration-150 slide-in-button ${
+                className={`bg-blue-600 tracking-wider px-16 py-4 mt-7 rounded-lg hover:bg-blue-700 text-white duration-150 slide-in-button ${
                   mooli.className
                 } ${inter.className} ${slideOut && "slide-out-button"}`}
                 onClick={handleClick}
@@ -90,7 +109,7 @@ export default function Home() {
                 <SignedOut>
                   <Link href="/sign-in">
                     <button
-                      className={`${mooli.className} ${inter.className} bg-blue-600 tracking-wider px-16 py-4 mt-3 rounded-lg cursor-pointer hover:bg-blue-700 text-white z-30 font-bold font-roboto slide-in-right  `}
+                      className={`${mooli.className} ${inter.className} bg-blue-600 tracking-wider px-16 py-4 mt-3 rounded-lg cursor-pointer hover:bg-blue-700 text-white slide-in-top duration-300  `}
                     >
                       Admin
                     </button>
@@ -100,9 +119,22 @@ export default function Home() {
                 <SignedIn>
                   <Link href="/dashboard">
                     <button
-                      className={`${mooli.className} ${inter.className} bg-blue-600 tracking-wider px-16 py-4 mt-3 rounded-lg cursor-pointer hover:bg-blue-700 text-white z-30 font-bold font-roboto slide-in-right  `}
+                      className={`${mooli.className} ${inter.className} bg-blue-600 tracking-wider px-16 py-4 mt-3 rounded-lg cursor-pointer hover:bg-blue-700 text-white slide-in-top duration-300  `}
+                      onClick={load}
                     >
-                      Dashboard
+                      {!isLoading ? (
+                        "Dashboard"
+                      ) : (
+                        <ThreeCircles
+                          visible={true}
+                          height="30"
+                          width="30"
+                          color="white"
+                          ariaLabel="three-circles-loading"
+                          wrapperStyle={{}}
+                          wrapperClass=""
+                        />
+                      )}
                     </button>
                   </Link>
                 </SignedIn>
@@ -128,9 +160,22 @@ export default function Home() {
             {!showLogo && (
               <Link href="/pages/food-menu">
                 <button
-                  className={`${mooli.className} ${inter.className} bg-blue-600 tracking-wider px-16 py-4 mt-7 rounded-lg hover:bg-blue-700 text-white z-30 font-bold font-roboto scale-in-center  `}
+                  className={`${mooli.className} ${inter.className} bg-blue-600 tracking-wider px-16 py-4 mt-3 rounded-lg cursor-pointer hover:bg-blue-700 text-white scale-in-center duration-300  `}
+                  onClick={foodLoad}
                 >
-                  Food
+                  {!foodIsLoading ? (
+                    "Food"
+                  ) : (
+                    <ThreeCircles
+                      visible={true}
+                      height="30"
+                      width="30"
+                      color="white"
+                      ariaLabel="three-circles-loading"
+                      wrapperStyle={{}}
+                      wrapperClass=""
+                    />
+                  )}
                 </button>
               </Link>
             )}
@@ -142,11 +187,26 @@ export default function Home() {
               </p>
             )}
             {!showLogo && (
-              <button
-                className={`${mooli.className} ${inter.className} bg-blue-600 tracking-wider px-16 py-4 mt-7 rounded-lg hover:bg-blue-700 text-white z-30 font-bold font-roboto scale-in-center  `}
-              >
-                Drink
-              </button>
+              <Link href="/dashboard">
+                <button
+                  className={`${mooli.className} ${inter.className} bg-blue-600 tracking-wider px-16 py-4 mt-3 rounded-lg cursor-pointer hover:bg-blue-700 text-white scale-in-center duration-300  `}
+                  onClick={drinkLoad}
+                >
+                  {!drinkIsLoading ? (
+                    "Drink"
+                  ) : (
+                    <ThreeCircles
+                      visible={true}
+                      height="30"
+                      width="30"
+                      color="white"
+                      ariaLabel="three-circles-loading"
+                      wrapperStyle={{}}
+                      wrapperClass=""
+                    />
+                  )}
+                </button>
+              </Link>
             )}
           </section>
         </section>

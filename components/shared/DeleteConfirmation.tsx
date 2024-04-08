@@ -27,17 +27,17 @@ export const DeleteConfirmation = ({ foodId }: { foodId: string }) => {
       <AlertDialogTrigger>
         <Image
           src="/assets/icons/delete.svg"
-          alt="edit"
+          alt="delete"
           width={20}
-                  height={20}
-                  className="mt-2"
+          height={20}
+          className="mt-2"
         />
       </AlertDialogTrigger>
 
       <AlertDialogContent className="bg-white">
         <AlertDialogHeader>
           <AlertDialogTitle>Are you sure you want to delete?</AlertDialogTitle>
-          <AlertDialogDescription className="p-regular-16 text-grey-600">
+          <AlertDialogDescription className=" text-gray-600">
             This will permanently delete this food
           </AlertDialogDescription>
         </AlertDialogHeader>
@@ -51,6 +51,7 @@ export const DeleteConfirmation = ({ foodId }: { foodId: string }) => {
                 await deleteFood({ foodId, path: pathname });
               })
             }
+            className="bg-blue-500"
           >
             {isPending ? "Deleting..." : "Delete"}
           </AlertDialogAction>

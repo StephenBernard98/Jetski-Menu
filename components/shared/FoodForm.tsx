@@ -23,6 +23,7 @@ import { Checkbox } from "../ui/checkbox";
 import { useRouter } from "next/navigation";
 import { createFood, updateFood } from "@/lib/actions/food.actions";
 import { IFood } from "@/lib/database/models/food.model";
+import { ThreeCircles } from "react-loader-spinner";
 
 type FoodFormProps = {
   userId: string;
@@ -33,6 +34,7 @@ type FoodFormProps = {
 
 const FoodForm = ({ userId, type, food, foodId }: FoodFormProps) => {
   const [files, setFiles] = useState<File[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     document.title = "Add Food";
@@ -77,7 +79,7 @@ const FoodForm = ({ userId, type, food, foodId }: FoodFormProps) => {
 
         if (newFood) {
           form.reset();
-              router.push(`/dashboard/food/${newFood._id}`);
+          router.push(`/dashboard/food/${newFood._id}`);
         }
       } catch (error) {
         console.log(error);
@@ -94,18 +96,22 @@ const FoodForm = ({ userId, type, food, foodId }: FoodFormProps) => {
         const updatedFood = await updateFood({
           userId,
           food: { ...values, imageUrl: uploadedImageUrl, _id: foodId },
-          path: `/food/${foodId}`,
+          path: `/dashboard/food/${foodId}`,
         });
 
         if (updatedFood) {
           form.reset();
-          router.push(`/food/${updatedFood._id}`);
+          router.push(`/dashboard`);
         }
       } catch (error) {
         console.log(error);
       }
     }
   }
+
+  const load = () => {
+    setIsLoading(true);
+  };
 
   return (
     <Form {...form}>
@@ -229,14 +235,28 @@ const FoodForm = ({ userId, type, food, foodId }: FoodFormProps) => {
             )}
           />
         </div>
-
         <Button
           type="submit"
           size="lg"
           disabled={form.formState.isSubmitting}
           className="bg-blue-600 text-xl col-span-2 w-full hover:bg-blue-700"
         >
-          {form.formState.isSubmitting ? "Submitting..." : `${type} Food `}
+          {form.formState.isSubmitting ? (
+            <>
+              {() => setIsLoading(true)}
+              <ThreeCircles
+                visible={true}
+                height="30"
+                width="30"
+                color="white"
+                ariaLabel="three-circles-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+              />
+            </>
+          ) : (
+            `${type} Food`
+          )}
         </Button>
       </form>
     </Form>
