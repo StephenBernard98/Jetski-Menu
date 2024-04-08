@@ -98,7 +98,7 @@ export default function Home() {
                 </SignedOut>
 
                 <SignedIn>
-                  <Link href="/pages/dashboard">
+                  <Link href="/dashboard">
                     <button
                       className={`${mooli.className} ${inter.className} bg-blue-600 tracking-wider px-16 py-4 mt-3 rounded-lg cursor-pointer hover:bg-blue-700 text-white z-30 font-bold font-roboto slide-in-right  `}
                     >

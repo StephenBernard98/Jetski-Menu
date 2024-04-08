@@ -21,15 +21,10 @@ export type CreateFoodParams = {
   food: {
     foodName: string;
     description: string;
-    location: string;
     imageUrl: string;
-    createdAt: Date;
-    startDateTime: Date;
-    endDateTime: Date;
     categoryId: string;
     price: string;
-    isFree: boolean;
-    url: string;
+    isSpicy: boolean;
   };
   path: string;
 };
@@ -41,20 +36,15 @@ export type UpdateFoodParams = {
     foodName: string;
     imageUrl: string;
     description: string;
-    location: string;
-    startDateTime: Date;
-    endDateTime: Date;
-    createdAt: Date;
     categoryId: string;
     price: string;
-    isFree: boolean;
-    url: string;
+    isSpicy: boolean;
   };
   path: string;
 };
 
 export type DeleteFoodParams = {
-  eventId: string;
+  foodId: string;
   path: string;
 };
 
@@ -73,7 +63,7 @@ export type GetFoodByUserParams = {
 
 export type GetRelatedFoodByCategoryParams = {
   categoryId: string;
-  eventId: string;
+  foodId: string;
   limit?: number;
   page: number | string;
 };
@@ -83,13 +73,8 @@ export type Food = {
   foodName: string;
   description: string;
   price: string;
-  isFree: boolean;
+  isSpicy: boolean;
   imageUrl: string;
-  location: string;
-  startDateTime: Date;
-  endDateTime: Date;
-  createdAt: Date;
-  url: string;
   category: {
     _id: string;
     name: string;
@@ -104,22 +89,21 @@ export type CreateCategoryParams = {
 // ====== ORDER PARAMS
 export type CheckoutOrderParams = {
   eventTitle: string;
-  eventId: string;
+  foodId: string;
   price: string;
-  isFree: boolean;
+  isSpicy: boolean;
   buyerId: string;
 };
 
 export type CreateOrderParams = {
   stripeId: string;
-  eventId: string;
+  foodId: string;
   buyerId: string;
   totalAmount: string;
-  createdAt: Date;
 };
 
 export type GetOrdersByFoodParams = {
-  eventId: string;
+  foodId: string;
   searchString: string;
 };
 
