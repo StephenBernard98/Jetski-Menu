@@ -149,7 +149,7 @@ export default function Home() {
             </h1>
           )}
           <section>
-            {!showLogo && (
+          
               <Link href="/pages/food-menu">
                 <button
                   className={` bg-blue-600 tracking-wider px-16 py-4 mt-3 rounded-lg cursor-pointer hover:bg-blue-700 text-white scale-in-center duration-300  `}
@@ -170,7 +170,6 @@ export default function Home() {
                   )}
                 </button>
               </Link>
-            )}
             {!showLogo && (
               <p
                 className={` text-white font-bold text-base text-center scale-in-center  my-3`}
@@ -178,7 +177,6 @@ export default function Home() {
                 or
               </p>
             )}
-            {!showLogo && (
               <Link href="/dashboard">
                 <button
                   className={` bg-blue-600 tracking-wider px-16 py-4 mt-3 rounded-lg cursor-pointer hover:bg-blue-700 text-white scale-in-center duration-300  `}
@@ -199,7 +197,7 @@ export default function Home() {
                   )}
                 </button>
               </Link>
-            )}
+            
           </section>
         </section>
       </main>
