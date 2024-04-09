@@ -3,19 +3,13 @@ import Image from "next/image";
 import logo from "@/public/assets/images/WEBP/ljr-logo.webp";
 import bgImg from "@/public/assets/images/WEBP/bg-img.webp";
 import { useEffect, useState } from "react";
-import { Inter, Mooli, Roboto_Mono } from "next/font/google";
 import "./home.css";
 import Link from "next/link";
 import { SignedIn, SignedOut } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { ThreeCircles } from "react-loader-spinner";
 
-const mooli = Mooli({ subsets: ["latin"], weight: "400" });
 
-const inter = Inter({
-  subsets: ["latin"],
-  display: "swap",
-});
 
 export default function Home() {
   const [showLogo, setShowLogo] = useState(true);
@@ -91,9 +85,7 @@ export default function Home() {
             />
             <div className="flex justify-center">
               <button
-                className={`bg-blue-600 tracking-wider px-16 py-4 mt-7 rounded-lg hover:bg-blue-700 text-white duration-150 slide-in-button ${
-                  mooli.className
-                } ${inter.className} ${slideOut && "slide-out-button"}`}
+                className={`bg-blue-600 tracking-wider px-16 py-4 mt-7 rounded-lg hover:bg-blue-700 text-white duration-150 slide-in-button ${slideOut && "slide-out-button"}`}
                 onClick={handleClick}
               >
                 Welcome
@@ -109,7 +101,7 @@ export default function Home() {
                 <SignedOut>
                   <Link href="/sign-in">
                     <button
-                      className={`${mooli.className} ${inter.className} bg-blue-600 tracking-wider px-16 py-4 mt-3 rounded-lg cursor-pointer hover:bg-blue-700 text-white slide-in-top duration-300  `}
+                      className={` bg-blue-600 tracking-wider px-16 py-4 mt-3 rounded-lg cursor-pointer hover:bg-blue-700 text-white slide-in-top duration-300  `}
                     >
                       Admin
                     </button>
@@ -119,7 +111,7 @@ export default function Home() {
                 <SignedIn>
                   <Link href="/dashboard">
                     <button
-                      className={`${mooli.className} ${inter.className} bg-blue-600 tracking-wider px-16 py-4 mt-3 rounded-lg cursor-pointer hover:bg-blue-700 text-white slide-in-top duration-300  `}
+                      className={` bg-blue-600 tracking-wider px-16 py-4 mt-3 rounded-lg cursor-pointer hover:bg-blue-700 text-white slide-in-top duration-300  `}
                       onClick={load}
                     >
                       {!isLoading ? (
@@ -143,7 +135,7 @@ export default function Home() {
           </div>
           {!showLogo && (
             <h1
-              className={`${mooli.className} ${inter.className} text-white font-bold text-2xl pt-5 md:text-4xl text-center slide-in-fwd-left`}
+              className={` text-white font-bold text-2xl pt-5 md:text-4xl text-center slide-in-fwd-left`}
             >
               Hello our Lovely member. Welcome to Jetski!!
             </h1>
@@ -151,7 +143,7 @@ export default function Home() {
 
           {!showLogo && (
             <h1
-              className={`${mooli.className} ${inter.className} text-white font-bold text-2xl md:text-4xl text-center my-10 slide-in-left`}
+              className={` text-white font-bold text-2xl md:text-4xl text-center my-10 slide-in-left`}
             >
               What would you like to have?
             </h1>
@@ -160,7 +152,7 @@ export default function Home() {
             {!showLogo && (
               <Link href="/pages/food-menu">
                 <button
-                  className={`${mooli.className} ${inter.className} bg-blue-600 tracking-wider px-16 py-4 mt-3 rounded-lg cursor-pointer hover:bg-blue-700 text-white scale-in-center duration-300  `}
+                  className={` bg-blue-600 tracking-wider px-16 py-4 mt-3 rounded-lg cursor-pointer hover:bg-blue-700 text-white scale-in-center duration-300  `}
                   onClick={foodLoad}
                 >
                   {!foodIsLoading ? (
@@ -181,7 +173,7 @@ export default function Home() {
             )}
             {!showLogo && (
               <p
-                className={`${mooli.className} ${inter.className} text-white font-bold text-base text-center scale-in-center  my-3`}
+                className={` text-white font-bold text-base text-center scale-in-center  my-3`}
               >
                 or
               </p>
@@ -189,7 +181,7 @@ export default function Home() {
             {!showLogo && (
               <Link href="/dashboard">
                 <button
-                  className={`${mooli.className} ${inter.className} bg-blue-600 tracking-wider px-16 py-4 mt-3 rounded-lg cursor-pointer hover:bg-blue-700 text-white scale-in-center duration-300  `}
+                  className={` bg-blue-600 tracking-wider px-16 py-4 mt-3 rounded-lg cursor-pointer hover:bg-blue-700 text-white scale-in-center duration-300  `}
                   onClick={drinkLoad}
                 >
                   {!drinkIsLoading ? (
