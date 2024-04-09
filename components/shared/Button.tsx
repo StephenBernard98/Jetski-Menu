@@ -1,10 +1,5 @@
 "use client";
 
-const inter = Inter({
-  subsets: ["latin"],
-  display: "swap",
-});
-
 interface ButtonProps {
   children?: React.ReactNode;
 }
