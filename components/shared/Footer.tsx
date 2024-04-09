@@ -3,6 +3,7 @@ import Link from "next/link";
 import React from "react";
 
 const Footer = () => {
+  const date = new Date().getFullYear();
   return (
     <footer className="border-t">
       <div className="flex-center wrapper flex flex-col gap-4 flex-between w-full p-5 text-center sm:flex-row">
@@ -14,7 +15,7 @@ const Footer = () => {
             height={38}
           />
         </Link>
-        <p> Oriental Events &copy;2023 All Rights Reserved</p>
+        <p> Alchemy of Codes &copy; {date} All Rights Reserved</p>
       </div>
     </footer>
   );
