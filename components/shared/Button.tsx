@@ -5,10 +5,6 @@ interface ButtonProps {
 }
 
 const Button = ({ children }: ButtonProps) => {
-  const load = () => {
-    // Your load function implementation
-  };
-
   return (
     <div>
       <button
