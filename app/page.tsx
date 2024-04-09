@@ -3,6 +3,7 @@ import Image from "next/image";
 import logo from "@/public/assets/images/WEBP/ljr-logo.webp";
 import bgImg from "@/public/assets/images/WEBP/bg-img.webp";
 import { useEffect, useState } from "react";
+import { Inter, Mooli, Roboto_Mono } from "next/font/google";
 import "./home.css";
 import Link from "next/link";
 import { SignedIn, SignedOut } from "@clerk/nextjs";
@@ -149,7 +150,7 @@ export default function Home() {
             </h1>
           )}
           <section>
-          
+            {!showLogo && (
               <Link href="/pages/food-menu">
                 <button
                   className={` bg-blue-600 tracking-wider px-16 py-4 mt-3 rounded-lg cursor-pointer hover:bg-blue-700 text-white scale-in-center duration-300  `}
@@ -170,6 +171,7 @@ export default function Home() {
                   )}
                 </button>
               </Link>
+            )}
             {!showLogo && (
               <p
                 className={` text-white font-bold text-base text-center scale-in-center  my-3`}
@@ -177,6 +179,7 @@ export default function Home() {
                 or
               </p>
             )}
+            {!showLogo && (
               <Link href="/dashboard">
                 <button
                   className={` bg-blue-600 tracking-wider px-16 py-4 mt-3 rounded-lg cursor-pointer hover:bg-blue-700 text-white scale-in-center duration-300  `}
@@ -197,7 +200,7 @@ export default function Home() {
                   )}
                 </button>
               </Link>
-            
+            )}
           </section>
         </section>
       </main>
