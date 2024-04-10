@@ -15,7 +15,7 @@ const Card = ({ food, hasOrderLink, hidePrice }: CardProps) => {
   const { sessionClaims } = auth();
   const userId = sessionClaims?.userId as string;
   return (
-    <div className="group relative flex min-h-[380px] w-full max-w-[400px] flex-col overflow-hidden rounded-xl bg-white shadow-md transition-all hover:shadow-lg md:min-h-[438px] mx-2 ">
+    <div className=" relative flex min-h-[380px] w-full max-w-[400px] flex-col overflow-hidden rounded-xl bg-white shadow-md transition-all hover:shadow-lg md:min-h-[438px] mx-2 ">
       <Link
         href={`/dashboard/food/${food._id}`}
         style={{ backgroundImage: `url(${food.imageUrl})` }}
@@ -41,23 +41,14 @@ const Card = ({ food, hasOrderLink, hidePrice }: CardProps) => {
           />
         </Link>
       </div>
-      <div className="flex min-h-[50px] flex-col gap-3 p-5 font-semibold md:gap-4">
-        <div className="flex items-center flex-wrap gap-2">
-          <span
-            className={`font-semibold w-max rounded-full px-5 py-1 ${
-              food.isSpicy
-                ? "bg-red-300 text-red-800"
-                : "bg-green-300 text-green-900"
-            }`}
-          >
-            {food.isSpicy ? "Spicy" : `Not Spicy`}
-          </span>
-          <p className="p-semibold-14 w-max rounded-full bg-grey-500/10 px-4 py-1 text-grey-500">
+      <div className="flex min-h-[50px] w-full justify-between p-5 font-semibold md:gap-4">
+        <div className="flex items-center justify-between gap-2">
+          <p className=" rounded-full bg-gray-500/10 px-4 py-1 text-gray-500">
             {food.category !== undefined && food.category.name}
           </p>
           <p
             className="
-              flex-1 text-black"
+               text-black"
           >
             {food.foodName}
           </p>
