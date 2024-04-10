@@ -10,13 +10,13 @@ const formatPrice = (price: string) => {
   return price.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
-const FoodMenu = ({ searchParams }: SearchParamProps) => {
+const FoodMenu = ({ searchParams, params }: SearchParamProps) => {
   const [items, setItems] = useState<any[]>([]);
   const [itemList, setItemList] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchItems = async () => {
-      const fetchedItems = await FoodMenuList({ searchParams });
+      const fetchedItems = await FoodMenuList({ searchParams, params });
       setItems(fetchedItems || []);
 
       const dynamicItemList = fetchedItems.map((item, index) => ({
@@ -28,7 +28,7 @@ const FoodMenu = ({ searchParams }: SearchParamProps) => {
               <Image
                 src={logo}
                 alt="logo"
-                className={`my-2 object-contain logo_slide_in mt-5 lg:mt-3 w-[5rem] h-[5rem] z-10 `}
+                className={`my-2 object-contain mt-5 lg:mt-3 w-[5rem] h-[5rem] z-10 `}
               />
             </div>
             <h1
