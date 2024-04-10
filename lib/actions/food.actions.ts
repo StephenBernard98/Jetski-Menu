@@ -13,9 +13,11 @@ import {
   UpdateFoodParams,
   DeleteFoodParams,
   GetAllFoodParams,
-  GetFoodByUserParams,
+  GetFoodByCategoryParams,
   GetRelatedFoodByCategoryParams,
+  GetAllFoodCategories,
 } from "@/types";
+import { IFood } from "@/lib/database/models/food.model";
 
 const getCategoryByName = async (name: string) => {
   return Category.findOne({ name: { $regex: name, $options: "i" } });
@@ -35,8 +37,6 @@ const populateFood = (query: any) => {
 export async function createFood({ userId, food, path }: CreateFoodParams) {
   try {
     await connectToDatabase();
-
-
 
     const newFood = await Food.create({
       ...food,
@@ -142,35 +142,6 @@ export async function getAllFood({
   }
 }
 
-// // GET EVENTS BY ORGANIZER
-// export async function getEventsByUser({
-//   userId,
-//   limit = 6,
-//   page,
-// }: GetFoodByUserParams) {
-//   try {
-//     await connectToDatabase();
-
-//     const conditions = { organizer: userId };
-//     const skipAmount = (page - 1) * limit;
-
-//     const foodQuery = Food.find(conditions)
-//       .sort({ createdAt: "desc" })
-//       .skip(skipAmount)
-//       .limit(limit);
-
-//     const food = await populateFood(foodQuery);
-//     const foodCount = await Food.countDocuments(conditions);
-
-//     return {
-//       data: JSON.parse(JSON.stringify(food)),
-//       totalPages: Math.ceil(foodCount / limit),
-//     };
-//   } catch (error) {
-//     handleError(error);
-//   }
-// }
-
 // GET RELATED FOOD: FOOD WITH THE SAME CATEGORY
 export async function getRelatedFoodByCategory({
   categoryId,
@@ -202,3 +173,27 @@ export async function getRelatedFoodByCategory({
     handleError(error);
   }
 }
+
+
+export async function getFoodsByCategory({
+  category,
+}: GetAllFoodCategories) {
+  try {
+    connectToDatabase();
+
+    const categoryCondition = category
+      ? await getCategoryByName(category)
+      : null;
+    const conditions = {
+      $and: [categoryCondition ? { category: categoryCondition._id } : {}],
+    };
+
+    const foodQuery = Food.find(conditions).sort({ createdAt: "desc" });
+    const food = await populateFood(foodQuery);
+
+    return {
+      data: JSON.parse(JSON.stringify(food)),
+    };
+  } catch (error) {}
+}
+

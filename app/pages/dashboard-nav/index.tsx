@@ -3,7 +3,6 @@ import logo from "@/public/assets/images/WEBP/ljr-logo.webp";
 import React, { useState, useEffect } from "react";
 import { CiMenuFries } from "react-icons/ci";
 import { IoClose } from "react-icons/io5";
-import Image from "next/image";
 import { MdOutlineFastfood } from "react-icons/md";
 import { BiSolidDrink } from "react-icons/bi";
 import { IoHomeOutline } from "react-icons/io5";

@@ -17,7 +17,7 @@ const AdminDashboard = async ({ searchParams }: SearchParamProps) => {
     limit: 6,
   });
   return (
-    <main className="">
+    <main className="max-w-[1250px] mx-auto">
       <DashboardNav />
 
       <div className="font-bold text-center text-xl md:text-4xl mb-5 mt-7">

@@ -3,14 +3,11 @@ import Image from "next/image";
 import logo from "@/public/assets/images/WEBP/ljr-logo.webp";
 import bgImg from "@/public/assets/images/WEBP/bg-img.webp";
 import { useEffect, useState } from "react";
-import { Inter, Mooli, Roboto_Mono } from "next/font/google";
-import "./home.css";
+import ".././home.css";
 import Link from "next/link";
-import { SignedIn, SignedOut } from "@clerk/nextjs";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { ThreeCircles } from "react-loader-spinner";
-
-
 
 export default function Home() {
   const [showLogo, setShowLogo] = useState(true);
@@ -86,7 +83,9 @@ export default function Home() {
             />
             <div className="flex justify-center">
               <button
-                className={`bg-blue-600 tracking-wider px-16 py-4 mt-7 rounded-lg hover:bg-blue-700 text-white duration-150 slide-in-button ${slideOut && "slide-out-button"}`}
+                className={`bg-blue-600 tracking-wider px-16 py-4 mt-7 rounded-lg hover:bg-blue-700 text-white duration-150 slide-in-button ${
+                  slideOut && "slide-out-button"
+                }`}
                 onClick={handleClick}
               >
                 Welcome
@@ -102,21 +101,11 @@ export default function Home() {
                 <SignedOut>
                   <Link href="/sign-in">
                     <button
-                      className={` bg-blue-600 tracking-wider px-16 py-4 mt-3 rounded-lg cursor-pointer hover:bg-blue-700 text-white slide-in-top duration-300  `}
-                    >
-                      Admin
-                    </button>
-                  </Link>
-                </SignedOut>
-
-                <SignedIn>
-                  <Link href="/dashboard">
-                    <button
-                      className={` bg-blue-600 tracking-wider px-16 py-4 mt-3 rounded-lg cursor-pointer hover:bg-blue-700 text-white slide-in-top duration-300  `}
+                      className={` bg-blue-600 tracking-wider px-12 mx-2 py-4 mt-3 rounded-lg cursor-pointer hover:bg-blue-700 text-white slide-in-top duration-300  `}
                       onClick={load}
                     >
                       {!isLoading ? (
-                        "Dashboard"
+                        "Admin"
                       ) : (
                         <ThreeCircles
                           visible={true}
@@ -130,7 +119,33 @@ export default function Home() {
                       )}
                     </button>
                   </Link>
-                </SignedIn>
+                </SignedOut>
+
+                <div className="flex items-center">
+                  <SignedIn>
+                    <UserButton afterSignOutUrl="/" />
+                    <Link href="/dashboard">
+                      <button
+                        className={` bg-blue-600 tracking-wider px-12 mx-2 py-4 mt-3 rounded-lg cursor-pointer hover:bg-blue-700 text-white slide-in-top duration-300  `}
+                        onClick={load}
+                      >
+                        {!isLoading ? (
+                          "Dashboard"
+                        ) : (
+                          <ThreeCircles
+                            visible={true}
+                            height="30"
+                            width="30"
+                            color="white"
+                            ariaLabel="three-circles-loading"
+                            wrapperStyle={{}}
+                            wrapperClass=""
+                          />
+                        )}
+                      </button>
+                    </Link>
+                  </SignedIn>
+                </div>
               </div>
             )}
           </div>
@@ -153,7 +168,7 @@ export default function Home() {
             {!showLogo && (
               <Link href="/pages/food-menu">
                 <button
-                  className={` bg-blue-600 tracking-wider px-16 py-4 mt-3 rounded-lg cursor-pointer hover:bg-blue-700 text-white scale-in-center duration-300  `}
+                  className={` bg-blue-600 tracking-wider px-12 py-4 mt-4 rounded-lg cursor-pointer hover:bg-blue-700 text-white scale-in-center duration-300  `}
                   onClick={foodLoad}
                 >
                   {!foodIsLoading ? (
@@ -182,7 +197,7 @@ export default function Home() {
             {!showLogo && (
               <Link href="/dashboard">
                 <button
-                  className={` bg-blue-600 tracking-wider px-16 py-4 mt-3 rounded-lg cursor-pointer hover:bg-blue-700 text-white scale-in-center duration-300  `}
+                  className={` bg-blue-600 tracking-wider px-12 py-4 mt-4 rounded-lg cursor-pointer hover:bg-blue-700 text-white scale-in-center duration-300  `}
                   onClick={drinkLoad}
                 >
                   {!drinkIsLoading ? (

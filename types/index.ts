@@ -55,6 +55,12 @@ export type GetAllFoodParams = {
   page: number;
 };
 
+
+export type GetAllFoodCategories = {
+  category: string;
+};
+
+
 export type GetFoodByUserParams = {
   userId: string;
   limit?: number;
@@ -67,6 +73,12 @@ export type GetRelatedFoodByCategoryParams = {
   limit?: number;
   page: number | string;
 };
+
+export type GetFoodByCategoryParams = {
+  categoryId: string;
+  // query: string
+};
+
 
 export type Food = {
   _id: string;
@@ -126,6 +138,10 @@ export type RemoveUrlQueryParams = {
 };
 
 export type SearchParamProps = {
-  params: { id: string };
+  // params: { id: string };
   searchParams: { [key: string]: string | string[] | undefined };
+};
+
+export type SearchProps = {
+  categoryId: string;
 };

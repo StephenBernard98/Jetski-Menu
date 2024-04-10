@@ -1,7 +1,5 @@
 import React from "react";
 import { Tabs } from "antd";
-import type { TabsProps } from "antd";
-
 interface TabProps {
   defaultActiveKey?: string;
   items: Array<{ key: string; label: string; children: React.ReactNode }>;
