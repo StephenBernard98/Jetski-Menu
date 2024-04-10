@@ -48,7 +48,7 @@ const FoodMenu = ({ searchParams }: SearchParamProps) => {
 
           ...item.foods.map((food: any, foodIndex: number) => (
             <div key={foodIndex} className="max-w-[1100px] mx-auto">
-              <div className="mt-2 max-w-[500px] flex justify-between items-start text-gray-700">
+              <div className="mt-2 max-w-[900px] flex justify-between mx-auto items-start text-gray-700">
                 <div>
                   <p className="text-red-500 text-lg font-[700]">
                     {food.foodName}
