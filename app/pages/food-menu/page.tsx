@@ -5,6 +5,7 @@ import { SearchParamProps } from "@/types";
 import Tab from "@/src/components/tabs";
 import Image from "next/image";
 import logo from "@/public/assets/images/WEBP/ljr-logo.webp";
+import Link from "next/link";
 
 const formatPrice = (price: string) => {
   return price.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -48,19 +49,30 @@ const FoodMenu = ({ searchParams, params }: SearchParamProps) => {
 
           ...item.foods.map((food: any, foodIndex: number) => (
             <div key={foodIndex} className="max-w-[1100px] mx-auto">
-              <div className="mt-2 max-w-[900px] flex justify-between mx-auto items-start text-gray-700">
-                <div>
-                  <p className="text-red-500 text-lg font-[700]">
-                    {food.foodName}
-                  </p>
-                  <p className="max-w-[400px] text-base font-normal mt-2 leading-6">
-                    {food.description}
+              <Link href={`/dashboard/food/${food._id}`}>
+                <div className="mt-2 max-w-[900px] flex justify-between mx-auto items-start text-gray-700">
+                  <div className="flex">
+                    <Image
+                      src={food.imageUrl}
+                      alt="logo"
+                      width={40}
+                      height={40}
+                      className={` w-[3rem] h-[3rem] rounded-full  mr-4`}
+                    />
+                    <div>
+                      <p className="text-red-500 text-lg font-[700]">
+                        {food.foodName}
+                      </p>
+                      <p className="max-w-[400px] text-base font-normal mt-2 leading-6">
+                        {food.description}
+                      </p>
+                    </div>
+                  </div>
+                  <p className="text-base font-[540]">
+                    ₦{formatPrice(food.price)}
                   </p>
                 </div>
-                <p className="text-base font-[540]">
-                  ₦{formatPrice(food.price)}
-                </p>
-              </div>
+              </Link>
             </div>
           )),
         ],

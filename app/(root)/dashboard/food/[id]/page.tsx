@@ -9,6 +9,7 @@ import { GiChiliPepper } from "react-icons/gi";
 import { FaRegGrinTongueWink } from "react-icons/fa";
 import Link from "next/link";
 import { DeleteConfirmation } from "@/components/shared/DeleteConfirmation";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 const FoodDetails = async ({
   params: { id },
@@ -68,32 +69,48 @@ const FoodDetails = async ({
                 </div>
                 <div className="flex items-center">
                   <span className="font-bold mr-1">Section:</span>
-                  <p className="p-medium-16 rounded-full bg-grey-500/10 px-4 py-2.5 text-grey-500">
+                  <p className="rounded-full px-4 py-2.5 text-gray-900">
                     {food.category.name}
                   </p>
                 </div>
 
                 <div className="flex items-center">
                   <span className="font-bold mr-1">Price:</span>
-                  <p className="p-medium-16 rounded-full bg-grey-500/10 px-4 py-2.5 text-grey-500">
+                  <p className="rounded-full px-4 py-2.5 text-gray-900">
                     ₦{food.price}
                   </p>
                 </div>
                 <div className="flex items-center">
                   <span className="font-bold mr-1">Description:</span>
-                  <p className="p-medium-16 rounded-full bg-grey-500/10 px-4 py-2.5 text-grey-500">
+                  <p className="rounded-full text-lg px-4 py-2.5 text-gray-900">
                     {food.description}
                   </p>
                 </div>
 
-                <div className="flex items-center justify-center">
-                  <Link href="/dashboard">
-                    <button
-                      className={`bg-blue-600 tracking-wider px-8 py-3 mt-7 rounded-lg hover:bg-blue-700 text-white font-bold font-roboto scale-in-center  `}
-                    >
-                      Go to Dashboard
-                    </button>
-                  </Link>
+                <div>
+                  <div className="flex justify-center items-center">
+                    <SignedOut>
+                      <Link href="/pages/food-menu">
+                        <button
+                          className={` bg-blue-600 tracking-wider px-12 mx-2 py-4 mt-3 rounded-lg cursor-pointer hover:bg-blue-700 text-white slide-in-top duration-300  `}
+                        >
+                          Go Back
+                        </button>
+                      </Link>
+                    </SignedOut>
+                  </div>
+
+                  <div className="flex justify-center items-center">
+                    <SignedIn>
+                      <Link href="/dashboard">
+                        <button
+                          className={` bg-blue-600 tracking-wider px-12 mx-2 py-4 mt-3 rounded-lg cursor-pointer hover:bg-blue-700 text-white slide-in-top duration-300  `}
+                        >
+                          Go to Dashboard
+                        </button>
+                      </Link>
+                    </SignedIn>
+                  </div>
                 </div>
               </div>
             </div>
