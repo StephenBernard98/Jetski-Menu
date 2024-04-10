@@ -9,7 +9,7 @@ import { GiChiliPepper } from "react-icons/gi";
 import { FaRegGrinTongueWink } from "react-icons/fa";
 import Link from "next/link";
 import { DeleteConfirmation } from "@/components/shared/DeleteConfirmation";
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { SignedIn, SignedOut } from "@clerk/nextjs";
 
 const FoodDetails = async ({
   params: { id },
@@ -80,9 +80,9 @@ const FoodDetails = async ({
                     ₦{food.price}
                   </p>
                 </div>
-                <div className="flex items-center">
+                <div className="flex flex-col items-start">
                   <span className="font-bold mr-1">Description:</span>
-                  <p className="rounded-full text-lg px-4 py-2.5 text-gray-900">
+                  <p className="rounded-full text-lg mr-1 py-2.5 text-gray-900">
                     {food.description}
                   </p>
                 </div>
