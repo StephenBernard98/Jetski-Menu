@@ -10,6 +10,10 @@ import Link from "next/link";
 import { DeleteConfirmation } from "@/components/shared/DeleteConfirmation";
 import { SignedIn, SignedOut } from "@clerk/nextjs";
 
+const formatPrice = (price: string) => {
+  return price.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
+
 const FoodDetails = async ({
   params: { id },
   searchParams,
@@ -85,7 +89,7 @@ const FoodDetails = async ({
                 <div className="flex items-center">
                   <span className="font-bold mr-1">Price:</span>
                   <p className="rounded-full px-4 py-2.5 text-gray-900">
-                    ₦{food.price}
+                    ₦{formatPrice(food.price)}
                   </p>
                 </div>
                 <div className="flex flex-col items-start">
