@@ -52,13 +52,13 @@ const FoodMenu = ({ searchParams, params }: SearchParamProps) => {
               <Link href={`/dashboard/food/${food._id}`}>
                 <div className="mt-2 max-w-[900px] flex justify-between mx-auto items-start text-gray-700">
                   <div className="flex">
-                    {/* <Image
+                    <Image
                       src={food.imageUrl}
                       alt="logo"
                       width={40}
                       height={40}
                       className={` w-[2rem] md:w-[3rem] h-[2rem] md:h-[3rem] rounded-full  mr-4`}
-                    /> */}
+                    />
                     <div>
                       <p className="text-red-500 text-lg font-[700]">
                         {food.foodName}
@@ -81,7 +81,7 @@ const FoodMenu = ({ searchParams, params }: SearchParamProps) => {
       setItemList(dynamicItemList);
     };
     fetchItems();
-  }, [searchParams]);
+  });
 
   const onChange = (key: string) => {};
 
