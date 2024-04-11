@@ -58,8 +58,6 @@ const FoodDetails = async ({
               <div className="">
                 <div>
                   {food.isNew ? (
-                    ""
-                  ) : (
                     <div className="font-bold flex items-center rounded-full w-max">
                       <Image
                         src={newImg}
@@ -72,6 +70,8 @@ const FoodDetails = async ({
                         New Food
                       </span>
                     </div>
+                  ) : (
+                    ""
                   )}
                 </div>
                 <div className="flex items-center">
