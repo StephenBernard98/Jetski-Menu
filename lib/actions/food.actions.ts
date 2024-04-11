@@ -13,11 +13,9 @@ import {
   UpdateFoodParams,
   DeleteFoodParams,
   GetAllFoodParams,
-  GetFoodByCategoryParams,
   GetRelatedFoodByCategoryParams,
   GetAllFoodCategories,
 } from "@/types";
-import { IFood } from "@/lib/database/models/food.model";
 
 const getCategoryByName = async (name: string) => {
   return Category.findOne({ name: { $regex: name, $options: "i" } });
@@ -147,16 +145,15 @@ export async function getRelatedFoodByCategory({
   categoryId,
   foodId,
   limit = 3,
-  page = 1,
+  page,
 }: GetRelatedFoodByCategoryParams) {
   try {
     await connectToDatabase();
-
-    const skipAmount = (Number(page) - 1) * limit;
     const conditions = {
       $and: [{ category: categoryId }, { _id: { $ne: foodId } }],
     };
 
+    const skipAmount = (Number(page) - 1) * limit;
     const foodQuery = Food.find(conditions)
       .sort({ createdAt: "desc" })
       .skip(skipAmount)

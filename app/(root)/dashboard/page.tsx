@@ -20,7 +20,7 @@ const AdminDashboard = async ({ searchParams }: SearchParamProps) => {
     <main className="max-w-[1250px] mx-auto">
       <DashboardNav />
 
-      <div className="font-bold text-center text-xl md:text-4xl mb-5 mt-7">
+      <div className="font-bold text-center text-xl md:text-4xl mb-5 mt-[5rem]">
         All <span className="text-blue-600">Food</span>
       </div>
       <div className="flex items-center mx-2 h-full flex-col gap-3 md:flex-row">

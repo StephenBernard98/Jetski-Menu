@@ -5,7 +5,6 @@ import {
 } from "@/lib/actions/food.actions";
 import { SearchParamProps } from "@/types";
 import Image from "next/image";
-import { GiChiliPepper } from "react-icons/gi";
 import newImg from "@/public/assets/images/JPG/new-img.jpg";
 import Link from "next/link";
 import { DeleteConfirmation } from "@/components/shared/DeleteConfirmation";
@@ -17,10 +16,12 @@ const FoodDetails = async ({
 }: SearchParamProps) => {
   const food = await getFoodById(id);
 
+    const page = Number(searchParams?.page) || 1;
+
   const relatedFood = await getRelatedFoodByCategory({
     categoryId: food.category._id,
     foodId: food._id,
-    page: searchParams.page as string,
+    page: page,
   });
 
   return (
@@ -142,7 +143,7 @@ const FoodDetails = async ({
           emptyStateSubtext="Add a Food"
           collectionType="All_Food"
           limit={3}
-          page={searchParams.page as string}
+          page={page}
           totalPages={relatedFood?.totalPages}
         />
       </section>
