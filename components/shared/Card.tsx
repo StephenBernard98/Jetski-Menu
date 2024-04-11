@@ -3,6 +3,7 @@ import { formatDateTime } from "@/lib/utils";
 import { auth } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
+import { SignedIn } from "@clerk/nextjs";
 import { DeleteConfirmation } from "@/components/shared/DeleteConfirmation";
 
 type CardProps = {
@@ -21,29 +22,31 @@ const Card = ({ food, hasOrderLink, hidePrice }: CardProps) => {
         style={{ backgroundImage: `url(${food.imageUrl})` }}
         className="flex-center flex-grow bg-gray-50 bg-cover bg-center text-grey-500"
       />
+      <SignedIn>
+        <div className="absolute right-2 top-2 flex flex-col gap-[0.12rem] rounded-xl bg-white p-2 shadow-sm transition-all">
+          <Link href={`/dashboard/food/${food._id}/update`}>
+            <Image
+              src="/assets/icons/edit.svg"
+              alt="edit"
+              width={20}
+              height={20}
+            />
+          </Link>
+          <DeleteConfirmation foodId={food._id} />
+          <Link href={`/dashboard/food/${food._id}`}>
+            <Image
+              src="/assets/icons/link.svg"
+              alt="link"
+              width={20}
+              height={20}
+            />
+          </Link>
+        </div>
+      </SignedIn>
 
-      <div className="absolute right-2 top-2 flex flex-col gap-[0.12rem] rounded-xl bg-white p-2 shadow-sm transition-all">
-        <Link href={`/dashboard/food/${food._id}/update`}>
-          <Image
-            src="/assets/icons/edit.svg"
-            alt="edit"
-            width={20}
-            height={20}
-          />
-        </Link>
-        <DeleteConfirmation foodId={food._id} />
-        <Link href={`/dashboard/food/${food._id}`}>
-          <Image
-            src="/assets/icons/link.svg"
-            alt="link"
-            width={20}
-            height={20}
-          />
-        </Link>
-      </div>
       <div className="flex min-h-[50px] w-full justify-between p-5 font-semibold md:gap-4">
         <div className="flex items-center justify-between gap-2">
-          <p className=" rounded-full bg-gray-500/10 px-4 py-1 text-gray-500">
+          <p className=" rounded-full bg-gray-500/10 px-4 py-1 text-gray-500 text-sm md:text-base">
             {food.category !== undefined && food.category.name}
           </p>
           <p

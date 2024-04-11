@@ -6,6 +6,7 @@ import Tab from "@/src/components/tabs";
 import Image from "next/image";
 import logo from "@/public/assets/images/WEBP/ljr-logo.webp";
 import Link from "next/link";
+import "../../home.css";
 
 const formatPrice = (price: string) => {
   return price.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -14,6 +15,18 @@ const formatPrice = (price: string) => {
 const FoodMenu = ({ searchParams, params }: SearchParamProps) => {
   const [items, setItems] = useState<any[]>([]);
   const [itemList, setItemList] = useState<any[]>([]);
+  const [show, handleShow] = useState(true);
+
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 100) {
+        handleShow(false);
+      } else handleShow(true);
+    });
+    return () => {
+      window.removeEventListener("scroll", () => {});
+    };
+  }, [show]);
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -81,22 +94,45 @@ const FoodMenu = ({ searchParams, params }: SearchParamProps) => {
       setItemList(dynamicItemList);
     };
     fetchItems();
-  });
+  }, []);
 
   const onChange = (key: string) => {};
 
+  const handleClickFired = () => {
+    var element = document.querySelector(".myDiv");
+    if (element) {
+      var headerOffset = 80;
+      var elementPosition = element.getBoundingClientRect().top;
+      var offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    } else {
+      console.error("Element with class '.myDiv' not found.");
+    }
+  };
+
   return (
-    <div className="flex flex-col lg:flex-row bg-gray-50 justify-between">
-      <Link href="/">
-        <div className="max-w-[400px]">
+    <div className="flex flex-col lg:flex-row myDiv bg-gray-50 justify-between">
+      <div className="max-w-[400px]">
+        <Link href="/">
           <button
             className={` bg-blue-600 tracking-wider px-5 md:px-6 lg:px-8 mx-3 my-2 py-2 md:py-3 lg:py-4 mt-3 rounded-lg cursor-pointer hover:bg-blue-700 text-white slide-in-top duration-300  `}
           >
             Drink
           </button>
-        </div>
-      </Link>
-      <div className=" md:max-w-[800px] lg:max-w-[1200px] text-gray-700 lg:flex-1 bg-gray-50 font-bold text-4xl p-3 ">
+        </Link>
+        <span
+          className={`text-3xl bg-blue-900 font-[900] rounded-full py-[14px] md:py-[10px] px-[25px] md:px-[21px] fixed bottom-3 right-3 cursor-pointer slide-in-blurred-top ${
+            show && "hidden"
+          }`}
+          onClick={handleClickFired}
+        >
+          &#8593;
+        </span>
+      </div>
+      <div className=" md:max-w-[800px] lg:max-w-[1200px] myDiv text-gray-700 lg:flex-1 bg-gray-50 font-bold text-4xl p-3 right-0 ">
         <Tab defaultActiveKey="1" items={itemList} onChange={onChange} />
       </div>
     </div>
