@@ -86,8 +86,19 @@ const FoodMenu = ({ searchParams, params }: SearchParamProps) => {
   const onChange = (key: string) => {};
 
   return (
-    <div className=" max-w-[1100px]  text-gray-700 bg-gray-50 mx-auto font-bold text-4xl p-3 ">
-      <Tab defaultActiveKey="1" items={itemList} onChange={onChange} />
+    <div className="flex flex-col lg:flex-row bg-gray-50 justify-between">
+      <Link href="/">
+        <div className="max-w-[400px]">
+          <button
+            className={` bg-blue-600 tracking-wider px-5 md:px-6 lg:px-8 mx-3 my-2 py-2 md:py-3 lg:py-4 mt-3 rounded-lg cursor-pointer hover:bg-blue-700 text-white slide-in-top duration-300  `}
+          >
+            Go Back
+          </button>
+        </div>
+      </Link>
+      <div className=" md:max-w-[800px] lg:max-w-[1200px] text-gray-700 lg:flex-1 bg-gray-50 font-bold text-4xl p-3 ">
+        <Tab defaultActiveKey="1" items={itemList} onChange={onChange} />
+      </div>
     </div>
   );
 };

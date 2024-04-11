@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { CiMenuFries } from "react-icons/ci";
 import { IoClose } from "react-icons/io5";
 import Image from "next/image";
-import { MdOutlineFastfood } from "react-icons/md";
+import { MdOutlineFastfood, MdOutlineMenuBook } from "react-icons/md";
 import { BiSolidDrink } from "react-icons/bi";
 import { IoHomeOutline } from "react-icons/io5";
 import Link from "next/link";
@@ -96,6 +96,12 @@ const DashboardNav = () => {
               <BiSolidDrink size={25} className="ml-4 mr-3" />
               Add Drink
             </li>
+            <Link href="/pages/food-menu">
+              <li className="text-xl cursor-pointer py-4 flex items-center hover:bg-blue-500 hover:text-white/80 duration-500 hover:rounded-lg">
+                <MdOutlineMenuBook size={25} className="ml-4 mr-3" />
+                Menu
+              </li>
+            </Link>
           </ul>
         </nav>
       </div>
