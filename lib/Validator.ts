@@ -15,5 +15,5 @@ export const foodFormSchema = z.object({
   imageUrl: z.string(),
   categoryId: z.string(),
   price: z.string(),
-  isSpicy: z.boolean(),
+  isNew: z.boolean(),
 });

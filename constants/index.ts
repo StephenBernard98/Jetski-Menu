@@ -4,5 +4,5 @@ export const foodDefaultValues = {
   imageUrl: "",
   categoryId: "",
   price: "",
-  isSpicy: false,
+  isNew: false,
 };

@@ -6,7 +6,7 @@ export interface IFood extends Document {
   description?: string;
   imageUrl: string;
   price: string;
-  isSpicy: boolean;
+  isNew: boolean;
   category?: { _id: string; name: string };
   organizer?: { _id: string; firstName: string; lastName: string };
 }
@@ -16,7 +16,7 @@ const FoodSchema = new Schema({
   description: { type: String },
   imageUrl: { type: String, required: true },
   price: { type: String },
-  isSpicy: { type: Boolean, default: false },
+  isNew: { type: Boolean, default: false },
   category: { type: Schema.Types.ObjectId, ref: "Category" },
   organizer: { type: Schema.Types.ObjectId, ref: "User" },
 });

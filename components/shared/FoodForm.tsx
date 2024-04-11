@@ -211,7 +211,7 @@ const FoodForm = ({ userId, type, food, foodId }: FoodFormProps) => {
 
           <FormField
             control={form.control}
-            name="isSpicy"
+            name="isNew"
             render={({ field }) => (
               <FormItem>
                 <FormControl>
@@ -219,14 +219,14 @@ const FoodForm = ({ userId, type, food, foodId }: FoodFormProps) => {
                     <Checkbox
                       onCheckedChange={field.onChange}
                       checked={field.value}
-                      id="isSpicy"
+                      id="isNew"
                       className="mr-2 h-5 w-5 border-2 border-gray-500"
                     />
                     <label
-                      htmlFor="isSpicy"
+                      htmlFor="isNew"
                       className="whitespace-nowrap pr-3 text-gray-800 font-bold leading-none peer-disabled:cursor-not-allowed bg-gray-200 peer-disabled:opacity-70"
                     >
-                      is Spicy?
+                      New Food?
                     </label>
                   </div>
                 </FormControl>

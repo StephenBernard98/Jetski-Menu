@@ -6,7 +6,7 @@ import {
 import { SearchParamProps } from "@/types";
 import Image from "next/image";
 import { GiChiliPepper } from "react-icons/gi";
-import { FaRegGrinTongueWink } from "react-icons/fa";
+import newImg from "@/public/assets/images/JPG/new-img.jpg";
 import Link from "next/link";
 import { DeleteConfirmation } from "@/components/shared/DeleteConfirmation";
 import { SignedIn, SignedOut } from "@clerk/nextjs";
@@ -34,17 +34,19 @@ const FoodDetails = async ({
             height={700}
             className=" md:w-1/2 lg:w-full w-full min-h-[300px] object-cover object-center md:mr-2  rounded-lg"
           />
-          <div className="absolute right-3 md:right-2 top-3 md:top-2 flex flex-col gap-[0.12rem] rounded-xl bg-white p-2 shadow-sm transition-all">
-            <Link href={`/dashboard/food/${food._id}/update`}>
-              <Image
-                src="/assets/icons/edit.svg"
-                alt="edit"
-                width={20}
-                height={20}
-              />
-            </Link>
-            <DeleteConfirmation foodId={food._id} />
-          </div>
+          <SignedIn>
+            <div className="absolute right-3 md:right-2 top-3 md:top-2 flex flex-col gap-[0.12rem] rounded-xl bg-white p-2 shadow-sm transition-all">
+              <Link href={`/dashboard/food/${food._id}/update`}>
+                <Image
+                  src="/assets/icons/edit.svg"
+                  alt="edit"
+                  width={20}
+                  height={20}
+                />
+              </Link>
+              <DeleteConfirmation foodId={food._id} />
+            </div>
+          </SignedIn>
 
           <div className="flex w-full flex-col font-bold gap-8 text-lg md:text-xl ">
             <div className="flex flex-col gap-6">
@@ -55,15 +57,20 @@ const FoodDetails = async ({
 
               <div className="">
                 <div>
-                  {food.isSpicy ? (
-                    <div className="font-bold flex items-center rounded-full bg-red-500/10 px-5 py-2 text-red-700 w-max">
-                      <GiChiliPepper />
-                      <span className="ml-2">Spicy</span>
-                    </div>
+                  {food.isNew ? (
+                    ""
                   ) : (
-                    <div className="font-bold flex items-center rounded-full bg-green-500/10 px-5 py-2 text-green-700 w-max">
-                      <FaRegGrinTongueWink />
-                      <span className="ml-2">Not Spicy</span>
+                    <div className="font-bold flex items-center rounded-full w-max">
+                      <Image
+                        src={newImg}
+                        alt="logo"
+                        width={40}
+                        height={40}
+                        className={` w-[2.5rem] md:w-[3rem] h-[2.5rem] md:h-[3rem] rounded-full  mr-1`}
+                      />
+                      <span className="ml-2 p-2 rounded-lg text-green-700 bg-green-500/10">
+                        New Food
+                      </span>
                     </div>
                   )}
                 </div>

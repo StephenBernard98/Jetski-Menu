@@ -24,7 +24,7 @@ export type CreateFoodParams = {
     imageUrl: string;
     categoryId: string;
     price: string;
-    isSpicy: boolean;
+    isNew: boolean;
   };
   path: string;
 };
@@ -38,7 +38,7 @@ export type UpdateFoodParams = {
     description: string;
     categoryId: string;
     price: string;
-    isSpicy: boolean;
+    isNew: boolean;
   };
   path: string;
 };
@@ -85,7 +85,7 @@ export type Food = {
   foodName: string;
   description: string;
   price: string;
-  isSpicy: boolean;
+  isNew: boolean;
   imageUrl: string;
   category: {
     _id: string;
@@ -103,7 +103,7 @@ export type CheckoutOrderParams = {
   eventTitle: string;
   foodId: string;
   price: string;
-  isSpicy: boolean;
+  isNew: boolean;
   buyerId: string;
 };
 

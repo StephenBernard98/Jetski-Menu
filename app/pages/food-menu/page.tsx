@@ -57,7 +57,7 @@ const FoodMenu = ({ searchParams, params }: SearchParamProps) => {
                       alt="logo"
                       width={40}
                       height={40}
-                      className={` w-[3rem] h-[3rem] rounded-full  mr-4`}
+                      className={` w-[2rem] md:w-[3rem] h-[2rem] md:h-[3rem] rounded-full  mr-4`}
                     />
                     <div>
                       <p className="text-red-500 text-lg font-[700]">
