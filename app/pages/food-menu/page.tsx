@@ -167,7 +167,7 @@ const FoodMenu = ({ searchParams, params }: SearchParamProps) => {
         </span>
       </div>
       <div className=" md:max-w-[800px] lg:max-w-[1200px] myDiv text-gray-700 lg:flex-1 bg-gray-50 font-bold text-4xl p-3 right-0 ">
-        <Tab defaultActiveKey="1" items={itemList} onChange={onChange} />
+        <Tab defaultActiveKey="0" items={itemList} onChange={onChange} />
       </div>
     </div>
   );
