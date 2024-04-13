@@ -36,7 +36,6 @@ const FoodMenu = ({ searchParams, params }: SearchParamProps) => {
     const fetchItems = async () => {
       try {
         const fetchedItems = await FoodMenuList({ searchParams, params });
-        console.log(fetchedItems);
         setItems(fetchedItems);
         setLoading(false);
 
@@ -118,13 +117,13 @@ const FoodMenu = ({ searchParams, params }: SearchParamProps) => {
   
     if (loading) {
       return (
-        <div className="h-screen bg-black text-blue-600 flex justify-center items-center">
+        <div className="h-screen bg-white/10 text-blue-600 flex justify-center items-center">
           {" "}
           <ThreeCircles
             visible={true}
-            height="30"
-            width="30"
-            color="white"
+            height="50"
+            width="50"
+            color="rgb(7,127,187)"
             ariaLabel="three-circles-loading"
             wrapperStyle={{}}
             wrapperClass=""
