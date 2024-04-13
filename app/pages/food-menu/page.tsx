@@ -7,6 +7,8 @@ import Image from "next/image";
 import logo from "@/public/assets/images/WEBP/ljr-logo.webp";
 import Link from "next/link";
 import "../../home.css";
+import { useRouter } from "next/navigation";
+import { ThreeCircles } from "react-loader-spinner";
 
 const formatPrice = (price: string) => {
   return price.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -16,6 +18,8 @@ const FoodMenu = ({ searchParams, params }: SearchParamProps) => {
   const [items, setItems] = useState<any[]>([]);
   const [itemList, setItemList] = useState<any[]>([]);
   const [show, handleShow] = useState(true);
+  const [loading, setLoading] = useState(true); 
+   const router = useRouter();
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -30,73 +34,104 @@ const FoodMenu = ({ searchParams, params }: SearchParamProps) => {
 
   useEffect(() => {
     const fetchItems = async () => {
-      const fetchedItems = await FoodMenuList({ searchParams, params });
-      setItems(fetchedItems || []);
+      try {
+        const fetchedItems = await FoodMenuList({ searchParams, params });
+        console.log(fetchedItems);
+        setItems(fetchedItems);
+        setLoading(false);
 
-      const dynamicItemList = fetchedItems.map((item, index) => ({
-        key: String(index),
-        label: item.label,
-        children: [
-          <div key={`label-${index}`} className="">
-            <div className="flex justify-center items-center">
-              <Image
-                src={logo}
-                alt="logo"
-                className={`my-2 object-contain mt-5 lg:mt-3 w-[5rem] h-[5rem] z-10 `}
-              />
-            </div>
-            <h1
-              key=""
-              className="text-2xl text-center text-gray-800 py-3 pb-1 font-bold"
-            >
-              FOOD MENU
-            </h1>
+        const dynamicItemList = fetchedItems.map((item, index) => ({
+          key: String(index),
+          label: item.label,
+          children: [
+            <div key={`label-${index}`} className="">
+              <div className="flex justify-center items-center">
+                <Image
+                  src={logo}
+                  alt="logo"
+                  className={`my-2 object-contain mt-5 lg:mt-3 w-[5rem] h-[5rem] z-10 `}
+                />
+              </div>
+              <h1
+                key=""
+                className="text-2xl text-center text-gray-800 py-3 pb-1 font-bold"
+              >
+                FOOD MENU
+              </h1>
 
-            <h1
-              key={`label-${index}`}
-              className="text-xl font-normal uppercase text-center my-5"
-            >
-              {item.label}
-            </h1>
-          </div>,
+              <h1
+                key={`label-${index}`}
+                className="text-xl font-normal uppercase text-center my-5"
+              >
+                {item.label}
+              </h1>
+            </div>,
 
-          ...item.foods.map((food: any, foodIndex: number) => (
-            <div key={foodIndex} className="max-w-[1100px] mx-auto">
-              <Link href={`/dashboard/food/${food._id}`}>
-                <div className="mt-2 max-w-[900px] flex justify-between mx-auto items-start text-gray-700">
-                  <div className="flex">
-                    <Image
-                      src={food.imageUrl}
-                      alt="logo"
-                      width={40}
-                      height={40}
-                      className={` w-[2rem] md:w-[3rem] h-[2rem] md:h-[3rem] rounded-full  mr-4`}
-                    />
-                    <div>
-                      <p className="text-red-500 text-lg font-[700]">
-                        {food.foodName}
-                      </p>
-                      <p className="max-w-[400px] text-base font-normal mt-2 leading-6">
-                        {food.description}
-                      </p>
+            ...item.foods.map((food: any, foodIndex: number) => (
+              <div key={foodIndex} className="max-w-[1100px] mx-auto">
+                <Link href={`/dashboard/food/${food._id}`}>
+                  <div className="mt-2 max-w-[900px] flex justify-between mx-auto items-start text-gray-700">
+                    <div className="flex">
+                      <Image
+                        src={food.imageUrl}
+                        alt="logo"
+                        width={40}
+                        height={40}
+                        className={` w-[2rem] md:w-[3rem] h-[2rem] md:h-[3rem] rounded-full  mr-4`}
+                      />
+                      <div>
+                        <p className="text-red-500 text-lg font-[700]">
+                          {food.foodName}
+                        </p>
+                        <p className="max-w-[400px] text-base font-normal mt-2 leading-6">
+                          {food.description}
+                        </p>
+                      </div>
                     </div>
+                    <p className="text-base font-[540]">
+                      ₦{formatPrice(food.price)}
+                    </p>
                   </div>
-                  <p className="text-base font-[540]">
-                    ₦{formatPrice(food.price)}
-                  </p>
-                </div>
-              </Link>
-            </div>
-          )),
-        ],
-      }));
+                </Link>
+              </div>
+            )),
+          ],
+        }));
 
-      setItemList(dynamicItemList);
+        setItemList(dynamicItemList);
+      } catch (error) {
+         console.error("Error fetching items:", error);
+         setLoading(false);
+      }
     };
     fetchItems();
-  });
+  }, [searchParams, params]);
 
-  const onChange = (key: string) => {};
+    useEffect(() => {
+      // Reload the page if itemList is empty
+      if (!loading && itemList.length === 0) {
+        router.refresh();
+      }
+    }, [itemList, loading, router]);
+
+  const onChange = (key: string) => { };
+  
+    if (loading) {
+      return (
+        <div className="h-screen bg-black text-blue-600 flex justify-center items-center">
+          {" "}
+          <ThreeCircles
+            visible={true}
+            height="30"
+            width="30"
+            color="white"
+            ariaLabel="three-circles-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+          />
+        </div>
+      );
+    }
 
   const handleClickFired = () => {
     var element = document.querySelector(".myDiv");
