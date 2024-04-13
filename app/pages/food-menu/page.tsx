@@ -94,7 +94,7 @@ const FoodMenu = ({ searchParams, params }: SearchParamProps) => {
       setItemList(dynamicItemList);
     };
     fetchItems();
-  });
+  }, []);
 
   const onChange = (key: string) => {};
 

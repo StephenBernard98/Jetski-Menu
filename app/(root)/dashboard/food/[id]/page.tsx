@@ -9,6 +9,7 @@ import newImg from "@/public/assets/images/JPG/new-img.jpg";
 import Link from "next/link";
 import { DeleteConfirmation } from "@/components/shared/DeleteConfirmation";
 import { SignedIn, SignedOut } from "@clerk/nextjs";
+import { IoChevronBackCircleOutline } from "react-icons/io5";
 
 const formatPrice = (price: string) => {
   return price.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -20,7 +21,7 @@ const FoodDetails = async ({
 }: SearchParamProps) => {
   const food = await getFoodById(id);
 
-    const page = Number(searchParams?.page) || 1;
+  const page = Number(searchParams?.page) || 1;
 
   const relatedFood = await getRelatedFoodByCategory({
     categoryId: food.category._id,
@@ -50,6 +51,12 @@ const FoodDetails = async ({
                 />
               </Link>
               <DeleteConfirmation foodId={food._id} />
+              <Link href={`/pages/food-menu`}>
+                <IoChevronBackCircleOutline
+                  size={23}
+                  className="text-blue-500 mt-1"
+                />
+              </Link>
             </div>
           </SignedIn>
 
