@@ -73,7 +73,7 @@ const FoodDetails = async ({
                     <div className="font-bold flex items-center rounded-full w-max">
                       <Image
                         src={newImg}
-                        alt="logo"
+                        alt="food-img"
                         width={40}
                         height={40}
                         className={` w-[2.5rem] md:w-[3rem] h-[2.5rem] md:h-[3rem] rounded-full  mr-1`}
@@ -111,7 +111,7 @@ const FoodDetails = async ({
                     <SignedOut>
                       <Link href="/pages/food-menu">
                         <button
-                          className={` bg-blue-600 tracking-wider px-12 mx-2 py-4 mt-3 rounded-lg cursor-pointer hover:bg-blue-700 text-white slide-in-top duration-300  `}
+                          className={` bg-blue-600 tracking-wider px-12 mx-2 py-4 mt-3 rounded-lg cursor-pointer hover:bg-blue-700 text-white duration-300  `}
                         >
                           Go Back
                         </button>
@@ -123,7 +123,7 @@ const FoodDetails = async ({
                     <SignedIn>
                       <Link href="/dashboard">
                         <button
-                          className={` bg-blue-600 tracking-wider px-12 mx-2 py-4 mt-3 rounded-lg cursor-pointer hover:bg-blue-700 text-white slide-in-top duration-300  `}
+                          className={` bg-blue-600 tracking-wider px-12 mx-2 py-4 mt-3 rounded-lg cursor-pointer hover:bg-blue-700 text-white duration-300  `}
                         >
                           Go to Dashboard
                         </button>

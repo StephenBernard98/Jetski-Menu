@@ -14,15 +14,15 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [foodIsLoading, setFoodIsLoading] = useState(false);
   const [drinkIsLoading, setDrinkIsLoading] = useState(false);
-
   const [slideOut, setSlideOut] = useState(false);
+  const [endAnimation, setEndAnimation] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setShowLogo(true); // Reset showLogo after 20 minutes
-    }, 20 * 60 * 1000); // 20 minutes in milliseconds
+      setShowLogo(true);
+    }, 24 * 60 * 60 * 1000);
 
-    return () => clearTimeout(timer); // Cleanup function
+    return () => clearTimeout(timer);
   }, []);
 
   const router = useRouter();
@@ -50,18 +50,58 @@ export default function Home() {
     const hideUntil = localStorage.getItem("hideLogoUntil");
     const currentTime = Date.now();
     if (hideUntil && parseInt(hideUntil) > currentTime) {
-      setShowLogo(false); // Hide the logo if still within the hiding period
-      setTimeout(() => {
-        setShowLogo(true); // Reset showLogo after 20 minutes
-      }, parseInt(hideUntil) - currentTime);
+      setShowLogo(false);
+      const timeUntilShow = parseInt(hideUntil) - currentTime;
+      if (timeUntilShow > 0) {
+        setTimeout(() => {
+          setShowLogo(true);
+        }, timeUntilShow);
+      } else {
+        setShowLogo(true);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    const stopAnimation = localStorage.getItem("stopAnimationUntil");
+    const currentTime = Date.now();
+    if (stopAnimation && parseInt(stopAnimation) > currentTime) {
+      setEndAnimation(true);
+      const timeUntilStartAnimation = parseInt(stopAnimation) - currentTime;
+      if (timeUntilStartAnimation > 0) {
+        setTimeout(() => {
+          setEndAnimation(false);
+        }, timeUntilStartAnimation);
+      } else {
+        setEndAnimation(false);
+      }
     }
   }, []);
 
   const handleClick = () => {
     setSlideOut(true);
-    localStorage.setItem("hideLogoUntil", `${Date.now() + 20 * 60 * 1000}`);
+    localStorage.setItem(
+      "hideLogoUntil",
+      `${Date.now() + 24 * 60 * 60 * 1000}`
+    );
     setTimeout(() => {
       setShowLogo(false);
+      setTimeout(() => {
+        setShowLogo(true);
+      }, 24 * 60 * 60 * 1000);
+    }, 1000);
+  };
+
+  const handleClickFired = () => {
+    localStorage.setItem(
+      "stopAnimationUntil",
+      `${Date.now() + 24 * 60 * 60 * 1000}`
+    );
+    setTimeout(() => {
+      setEndAnimation(true);
+      setTimeout(() => {
+        setEndAnimation(false);
+      }, 24 * 60 * 60 * 1000);
     }, 1000);
   };
 
@@ -101,8 +141,13 @@ export default function Home() {
                 <SignedOut>
                   <Link href="/sign-in">
                     <button
-                      className={` bg-blue-600 tracking-wider px-12 mx-2 py-4 mt-3 rounded-lg cursor-pointer hover:bg-blue-700 text-white slide-in-top duration-300  `}
-                      onClick={load}
+                      className={`bg-blue-600 tracking-wider px-12 mx-2 py-4 mt-3 rounded-lg cursor-pointer hover:bg-blue-700 text-white ${
+                        !endAnimation && " slide-in-top"
+                      } duration-300`}
+                      onClick={() => {
+                        load();
+                        handleClickFired();
+                      }}
                     >
                       {!isLoading ? (
                         "Admin"
@@ -126,8 +171,13 @@ export default function Home() {
                     <UserButton afterSignOutUrl="/" />
                     <Link href="/dashboard">
                       <button
-                        className={` bg-blue-600 tracking-wider px-12 mx-2 py-4 mt-3 rounded-lg cursor-pointer hover:bg-blue-700 text-white slide-in-top duration-300  `}
-                        onClick={load}
+                        className={`bg-blue-600 tracking-wider px-12 mx-2 py-4 mt-3 rounded-lg cursor-pointer hover:bg-blue-700 text-white ${
+                          !endAnimation && " slide-in-top"
+                        } duration-300`}
+                        onClick={() => {
+                          load();
+                          handleClickFired();
+                        }}
                       >
                         {!isLoading ? (
                           "Dashboard"
@@ -151,7 +201,9 @@ export default function Home() {
           </div>
           {!showLogo && (
             <h1
-              className={` text-white font-bold text-2xl pt-5 md:text-4xl text-center slide-in-fwd-left`}
+              className={` text-white font-bold text-2xl pt-5 md:text-4xl text-center ${
+                !endAnimation && " slide-in-fwd-left"
+              }`}
             >
               Hello our Lovely member. Welcome to Jetski!!
             </h1>
@@ -159,7 +211,9 @@ export default function Home() {
 
           {!showLogo && (
             <h1
-              className={` text-white font-bold text-2xl md:text-4xl text-center my-10 slide-in-left`}
+              className={` text-white font-bold text-2xl md:text-4xl text-center my-10 ${
+                !endAnimation && " slide-in-left"
+              }`}
             >
               What would you like to have?
             </h1>
@@ -168,8 +222,13 @@ export default function Home() {
             {!showLogo && (
               <Link href="/pages/food-menu">
                 <button
-                  className={` bg-blue-600 tracking-wider px-12 py-4 mt-4 rounded-lg cursor-pointer hover:bg-blue-700 text-white scale-in-center duration-300  `}
-                  onClick={foodLoad}
+                  className={` bg-blue-600 tracking-wider px-12 py-4 mt-4 rounded-lg cursor-pointer hover:bg-blue-700 text-white ${
+                    !endAnimation && "scale-in-center"
+                  } duration-300  `}
+                  onClick={() => {
+                    foodLoad();
+                    handleClickFired();
+                  }}
                 >
                   {!foodIsLoading ? (
                     "Food"
@@ -189,7 +248,9 @@ export default function Home() {
             )}
             {!showLogo && (
               <p
-                className={` text-white font-bold text-base text-center scale-in-center  my-3`}
+                className={` text-white font-bold text-base text-center ${
+                  !endAnimation && "scale-in-center"
+                }  my-3`}
               >
                 or
               </p>
@@ -197,8 +258,13 @@ export default function Home() {
             {!showLogo && (
               <Link href="/dashboard">
                 <button
-                  className={` bg-blue-600 tracking-wider px-12 py-4 mt-4 rounded-lg cursor-pointer hover:bg-blue-700 text-white scale-in-center duration-300  `}
-                  onClick={drinkLoad}
+                  className={` bg-blue-600 tracking-wider px-12 py-4 mt-4 rounded-lg cursor-pointer hover:bg-blue-700 text-white ${
+                    !endAnimation && "scale-in-center"
+                  } duration-300  `}
+                  onClick={() => {
+                    drinkLoad();
+                    handleClickFired();
+                  }}
                 >
                   {!drinkIsLoading ? (
                     "Drink"

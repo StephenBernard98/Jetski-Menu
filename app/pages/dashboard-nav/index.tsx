@@ -13,6 +13,7 @@ const DashboardNav = () => {
   const [nav, setNav] = useState(false);
   const [show, handleShow] = useState(false);
   const [slideOut, setSlideOut] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     window.addEventListener("scroll", () => {

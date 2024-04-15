@@ -19,6 +19,8 @@ const FoodMenu = ({ searchParams, params }: SearchParamProps) => {
   const [itemList, setItemList] = useState<any[]>([]);
   const [show, handleShow] = useState(true);
   const [loading, setLoading] = useState(true); 
+  const [endAnimation, setEndAnimation] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
    const router = useRouter();
 
   useEffect(() => {
@@ -31,6 +33,39 @@ const FoodMenu = ({ searchParams, params }: SearchParamProps) => {
       window.removeEventListener("scroll", () => {});
     };
   }, [show]);
+
+   useEffect(() => {
+     const stopAnimation = localStorage.getItem("foodStopAnimationUntil");
+     const currentTime = Date.now();
+     if (stopAnimation && parseInt(stopAnimation) > currentTime) {
+       setEndAnimation(true);
+       const timeUntilStartAnimation = parseInt(stopAnimation) - currentTime;
+       if (timeUntilStartAnimation > 0) {
+         setTimeout(() => {
+           setEndAnimation(false);
+         }, timeUntilStartAnimation);
+       } else {
+         setEndAnimation(false);
+       }
+     }
+   }, []);
+  
+   const load = () => {
+     setIsLoading(true);
+  };
+  
+   const handleClick = () => {
+     localStorage.setItem(
+       "foodStopAnimationUntil",
+       `${Date.now() + 24 * 60 * 60 * 1000}`
+     );
+     setTimeout(() => {
+       setEndAnimation(true);
+       setTimeout(() => {
+         setEndAnimation(false);
+       }, 24 * 60 * 60 * 1000);
+     }, 1000);
+   };
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -73,7 +108,7 @@ const FoodMenu = ({ searchParams, params }: SearchParamProps) => {
                     <div className="flex">
                       <Image
                         src={food.imageUrl}
-                        alt="logo"
+                        alt="food-img"
                         width={40}
                         height={40}
                         className={` w-[2rem] md:w-[3rem] h-[2rem] md:h-[3rem] rounded-full  mr-4`}
@@ -107,7 +142,6 @@ const FoodMenu = ({ searchParams, params }: SearchParamProps) => {
   }, [searchParams, params]);
 
     useEffect(() => {
-      // Reload the page if itemList is empty
       if (!loading && itemList.length === 0) {
         router.refresh();
       }
@@ -118,7 +152,6 @@ const FoodMenu = ({ searchParams, params }: SearchParamProps) => {
     if (loading) {
       return (
         <div className="h-screen bg-white/10 text-blue-600 flex justify-center items-center">
-          {" "}
           <ThreeCircles
             visible={true}
             height="50"
@@ -152,7 +185,13 @@ const FoodMenu = ({ searchParams, params }: SearchParamProps) => {
       <div className="max-w-[400px]">
         <Link href="/">
           <button
-            className={` bg-blue-600 tracking-wider px-5 md:px-6 lg:px-8 mx-3 my-2 py-2 md:py-3 lg:py-4 mt-3 rounded-lg cursor-pointer hover:bg-blue-700 text-white slide-in-top duration-300  `}
+            className={` bg-blue-600 tracking-wider px-5 md:px-6 lg:px-8 mx-3 my-2 py-2 md:py-3 lg:py-4 mt-3 rounded-lg cursor-pointer hover:bg-blue-700 text-white ${
+              !endAnimation && " slide-in-top"
+            } duration-300  `}
+            onClick={() => {
+              load();
+              handleClick();
+            }}
           >
             Drink
           </button>
