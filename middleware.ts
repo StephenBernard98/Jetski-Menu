@@ -5,6 +5,7 @@ export default authMiddleware({
     "/",
     "/dashboard/food/:id",
     "/pages/food-menu",
+    "/pages/food-menu/new-food",
     "/api/webhook/clerk",
     "/api/uploadthing",
   ],

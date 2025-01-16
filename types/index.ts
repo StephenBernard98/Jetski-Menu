@@ -43,7 +43,26 @@ export type UpdateFoodParams = {
   path: string;
 };
 
+export type NewFoodParams = {
+  food: {
+    _id?: string;
+    foodName: string;
+    imageUrl: string;
+    description: string;
+    categoryId: string;
+    price: string;
+    isNew: boolean;
+  };
+  // isNew: boolean;
+  path: string;
+};
+
 export type DeleteFoodParams = {
+  foodId: string;
+  path: string;
+};
+
+export type DeleteNewFoodParams = {
   foodId: string;
   path: string;
 };
@@ -58,6 +77,13 @@ export type GetAllFoodParams = {
 
 export type GetAllFoodCategories = {
   category: string;
+};
+
+export type GetAllNewFoodParams = {
+  query: string;
+  category: string;
+  limit: number;
+  page: number;
 };
 
 
@@ -96,6 +122,11 @@ export type Food = {
 // ====== CATEGORY PARAMS
 export type CreateCategoryParams = {
   categoryName: string;
+};
+
+export type DeleteCategoryParams = {
+  // categoryName: string;
+  categoryId : string
 };
 
 // ====== ORDER PARAMS

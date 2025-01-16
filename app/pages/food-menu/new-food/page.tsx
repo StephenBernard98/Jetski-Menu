@@ -1,16 +1,14 @@
-import DashboardNav from "@/app/pages/dashboard-nav";
-import CategoryFilter from "@/components/shared/CategoryFilter";
-import Collection from "@/components/shared/Collection";
-import Search from "@/components/shared/Search";
-import { getAllFood } from "@/lib/actions/food.actions";
+import { getAllNewFood } from "@/lib/actions/food.actions";
 import { SearchParamProps } from "@/types";
+import Collection from "@/components/shared/Collection";
+import Link from "next/link"
 
-const AdminDashboard = async ({ searchParams }: SearchParamProps) => {
+const NewFood = async ({ searchParams }: SearchParamProps) => {
   const page = Number(searchParams?.page) || 1;
   const searchText = (searchParams?.query as string) || "";
   const category = (searchParams?.category as string) || "";
 
-  const food = await getAllFood({
+  const food = await getAllNewFood({
     query: searchText,
     category: category,
     page: page,
@@ -18,14 +16,15 @@ const AdminDashboard = async ({ searchParams }: SearchParamProps) => {
   });
   return (
     <main className="max-w-[1250px] mx-auto">
-      <DashboardNav />
-
-      <div className="font-bold text-center text-xl md:text-4xl mb-5 mt-[5rem]">
-        All <span className="text-blue-600">Food</span>
-      </div>
-      <div className="flex items-center mx-2 h-full flex-col gap-3 md:flex-row">
-        <Search />
-        <CategoryFilter />
+      <div className="flex bg-blue-200 mb-5 mt-[1rem] rounded-xl items-center justify-between px-3 mx-1">
+        <Link href="/dashboard">
+          <div className="mt-5 bg-blue-600 hover:bg-blue-700 text-[1.1rem] text-white text-center mb-5 rounded-xl p-3">
+            Dashboard
+          </div>
+        </Link>
+        <div className="font-bold text-center text-xl md:text-4xl p-3">
+          New <span className="text-blue-600">Food</span>
+        </div>
       </div>
       <section className="wrapper my-8 flex flex-col gap-8 md:gap-12" id="food">
         <Collection
@@ -42,4 +41,4 @@ const AdminDashboard = async ({ searchParams }: SearchParamProps) => {
   );
 };
 
-export default AdminDashboard;
+export default NewFood;

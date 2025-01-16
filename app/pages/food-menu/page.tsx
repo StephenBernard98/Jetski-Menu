@@ -9,6 +9,8 @@ import Link from "next/link";
 import "../../home.css";
 import { useRouter } from "next/navigation";
 import { ThreeCircles } from "react-loader-spinner";
+import { FaMessage } from "react-icons/fa6";
+import Modal from "@/components/shared/Modal";
 
 const formatPrice = (price: string) => {
   return price.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -18,10 +20,38 @@ const FoodMenu = ({ searchParams, params }: SearchParamProps) => {
   const [items, setItems] = useState<any[]>([]);
   const [itemList, setItemList] = useState<any[]>([]);
   const [show, handleShow] = useState(true);
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
   const [endAnimation, setEndAnimation] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-   const router = useRouter();
+  const [newFoodPopUp, setNewFoodPopUp] = useState(false);
+  let [isPending, setIsPending] = useState(false);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    const lastShownTime = localStorage.getItem("lastModalShowTime");
+    if (
+      !lastShownTime ||
+      Date.now() - parseInt(lastShownTime) > 24 * 60 * 60 * 1000
+    ) {
+      setNewFoodPopUp(true);
+    } else {
+      setNewFoodPopUp(false);
+    }
+  }, []);
+
+  const handleCloseModal = () => {
+    localStorage.setItem("lastModalShowTime", Date.now().toString());
+    setNewFoodPopUp(false);
+  };
+
+  const handleButtonClick = () => {
+    setIsPending(true);
+    localStorage.setItem("lastModalShowTime", Date.now().toString());
+    setTimeout(() => {
+      router.push("/pages/food-menu/new-food");
+    }, 1000);
+  };
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -33,39 +63,40 @@ const FoodMenu = ({ searchParams, params }: SearchParamProps) => {
       window.removeEventListener("scroll", () => {});
     };
   }, [show]);
+  
 
-   useEffect(() => {
-     const stopAnimation = localStorage.getItem("foodStopAnimationUntil");
-     const currentTime = Date.now();
-     if (stopAnimation && parseInt(stopAnimation) > currentTime) {
-       setEndAnimation(true);
-       const timeUntilStartAnimation = parseInt(stopAnimation) - currentTime;
-       if (timeUntilStartAnimation > 0) {
-         setTimeout(() => {
-           setEndAnimation(false);
-         }, timeUntilStartAnimation);
-       } else {
-         setEndAnimation(false);
-       }
-     }
-   }, []);
-  
-   const load = () => {
-     setIsLoading(true);
+  useEffect(() => {
+    const stopAnimation = localStorage.getItem("foodStopAnimationUntil");
+    const currentTime = Date.now();
+    if (stopAnimation && parseInt(stopAnimation) > currentTime) {
+      setEndAnimation(true);
+      const timeUntilStartAnimation = parseInt(stopAnimation) - currentTime;
+      if (timeUntilStartAnimation > 0) {
+        setTimeout(() => {
+          setEndAnimation(false);
+        }, timeUntilStartAnimation);
+      } else {
+        setEndAnimation(false);
+      }
+    }
+  }, []);
+
+  const load = () => {
+    setIsLoading(true);
   };
-  
-   const handleClick = () => {
-     localStorage.setItem(
-       "foodStopAnimationUntil",
-       `${Date.now() + 24 * 60 * 60 * 1000}`
-     );
-     setTimeout(() => {
-       setEndAnimation(true);
-       setTimeout(() => {
-         setEndAnimation(false);
-       }, 24 * 60 * 60 * 1000);
-     }, 1000);
-   };
+
+  const handleClick = () => {
+    localStorage.setItem(
+      "foodStopAnimationUntil",
+      `${Date.now() + 24 * 60 * 60 * 1000}`
+    );
+    setTimeout(() => {
+      setEndAnimation(true);
+      setTimeout(() => {
+        setEndAnimation(false);
+      }, 24 * 60 * 60 * 1000);
+    }, 1000);
+  };
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -134,36 +165,36 @@ const FoodMenu = ({ searchParams, params }: SearchParamProps) => {
 
         setItemList(dynamicItemList);
       } catch (error) {
-         console.error("Error fetching items:", error);
-         setLoading(false);
+        console.error("Error fetching items:", error);
+        setLoading(false);
       }
     };
     fetchItems();
   }, [searchParams, params]);
 
-    useEffect(() => {
-      if (!loading && itemList.length === 0) {
-        router.refresh();
-      }
-    }, [itemList, loading, router]);
-
-  const onChange = (key: string) => { };
-  
-    if (loading) {
-      return (
-        <div className="h-screen bg-white/10 text-blue-600 flex justify-center items-center">
-          <ThreeCircles
-            visible={true}
-            height="50"
-            width="50"
-            color="rgb(7,127,187)"
-            ariaLabel="three-circles-loading"
-            wrapperStyle={{}}
-            wrapperClass=""
-          />
-        </div>
-      );
+  useEffect(() => {
+    if (!loading && itemList.length === 0) {
+      router.refresh();
     }
+  }, [itemList, loading, router]);
+
+  const onChange = (key: string) => {};
+
+  if (loading) {
+    return (
+      <div className="h-screen bg-white/10 text-blue-600 flex justify-center items-center">
+        <ThreeCircles
+          visible={true}
+          height="50"
+          width="50"
+          color="rgb(7,127,187)"
+          ariaLabel="three-circles-loading"
+          wrapperStyle={{}}
+          wrapperClass=""
+        />
+      </div>
+    );
+  }
 
   const handleClickFired = () => {
     var element = document.querySelector(".myDiv");
@@ -181,33 +212,91 @@ const FoodMenu = ({ searchParams, params }: SearchParamProps) => {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row myDiv bg-gray-50 justify-between">
-      <div className="max-w-[400px]">
-        <Link href="/">
-          <button
-            className={` bg-blue-600 tracking-wider px-5 md:px-6 lg:px-8 mx-3 my-2 py-2 md:py-3 lg:py-4 mt-3 rounded-lg cursor-pointer hover:bg-blue-700 text-white ${
-              !endAnimation && " slide-in-top"
-            } duration-300  `}
-            onClick={() => {
-              load();
-              handleClick();
-            }}
+    <div>
+      {newFoodPopUp ? (
+        <div>
+          <div
+            className={
+              newFoodPopUp
+                ? "fixed top-0 left-0 w-[100%]  h-screen bg-black/50 -z-10 duration-700 overflow-y-scroll"
+                : "fixed top-0 left-[-100%] w-[100%] h-screen bg-black/50 -z-10 duration-700 overflow-y-scroll delay-200"
+            }
+          ></div>
+          <div
+            className={
+              newFoodPopUp
+                ? "fixed top-0 left-0 w-[100%] md:w-[100%] h-screen bg-white z-10 duration-700 overflow-y-scroll delay-200 rounded-tr-3xl rounded-br-3xl"
+                : "fixed top-0 left-[-100%] w-[100%] md:w-[100%] h-screen bg-white z-10 duration-700 overflow-y-scroll"
+            }
           >
-            Drink
-          </button>
-        </Link>
-        <span
-          className={`text-3xl bg-blue-900 font-[900] rounded-full py-[14px] md:py-[10px] px-[25px] md:px-[21px] fixed bottom-3 right-3 cursor-pointer slide-in-blurred-top ${
-            show && "hidden"
-          }`}
-          onClick={handleClickFired}
-        >
-          &#8593;
-        </span>
-      </div>
-      <div className=" md:max-w-[800px] lg:max-w-[1200px] myDiv text-gray-700 lg:flex-1 bg-gray-50 font-bold text-4xl p-3 right-0 ">
-        <Tab defaultActiveKey="0" items={itemList} onChange={onChange} />
-      </div>
+            <Modal>
+              <div className="bg-white text-black px-5 py-20 rounded-xl relative">
+                <div className="flex items-center justify-center">
+                  <FaMessage size={30} />
+                  <h1 className="text-xl font-semibold ml-3">
+                    Hey there Member!!!Check our our new food cataglog.
+                  </h1>
+                </div>
+                <div className="absolute bottom-0 right-1">
+                  <button
+                    className={` bg-transparent border-2 border-gray-400 text-black tracking-wider px-5 md:px-6 lg:px-8 mx-3 my-2 py-2 md:py-1 lg:py-2 rounded-lg cursor-pointer hover:bg-red-500 hover:text-white hover:border-red-500 transition-all delay-75 font-semibold`}
+                    onClick={handleCloseModal}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    className={` bg-blue-600 tracking-wider px-5 md:px-6 lg:px-8 mx-3 my-2 py-2 md:py-1 lg:py-2 rounded-lg cursor-pointer hover:bg-blue-900 hover:border-blue-00 text-white border-2 border-blue-600 transition-all delay-75`}
+                    onClick={handleButtonClick}
+                  >
+                    {!isPending ? (
+                      "View"
+                    ) : (
+                      <ThreeCircles
+                        visible={true}
+                        height="30"
+                        width="30"
+                        color="white"
+                        ariaLabel="three-circles-loading"
+                        wrapperStyle={{}}
+                        wrapperClass=""
+                      />
+                    )}
+                  </button>
+                </div>
+              </div>
+            </Modal>
+          </div>
+        </div>
+      ) : (
+        <div className="flex flex-col lg:flex-row myDiv bg-gray-50 justify-between">
+          <div className="max-w-[400px]">
+            <Link href="/">
+              <button
+                className={` bg-blue-600 tracking-wider px-5 md:px-6 lg:px-8 mx-3 my-2 py-2 md:py-3 lg:py-4 mt-3 rounded-lg cursor-pointer hover:bg-blue-700 text-white ${
+                  !endAnimation && " slide-in-top"
+                } duration-300  `}
+                onClick={() => {
+                  load();
+                  handleClick();
+                }}
+              >
+                Drink
+              </button>
+            </Link>
+            <span
+              className={`text-3xl bg-blue-900 font-[900] rounded-full py-[14px] md:py-[10px] px-[25px] md:px-[21px] fixed bottom-3 right-3 cursor-pointer slide-in-blurred-top ${
+                show && "hidden"
+              }`}
+              onClick={handleClickFired}
+            >
+              &#8593;
+            </span>
+          </div>
+          <div className=" md:max-w-[800px] lg:max-w-[1200px] myDiv text-gray-700 lg:flex-1 bg-gray-50 font-bold text-4xl p-3 right-0 ">
+            <Tab defaultActiveKey="0" items={itemList} onChange={onChange} />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

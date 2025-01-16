@@ -2,13 +2,13 @@
 import logo from "@/public/assets/images/WEBP/ljr-logo.webp";
 import React, { useState, useEffect } from "react";
 import { CiMenuFries } from "react-icons/ci";
-import { IoClose } from "react-icons/io5";
+import { IoClose, IoHomeOutline, IoFastFood } from "react-icons/io5";
 import Image from "next/image";
 import { MdOutlineFastfood, MdOutlineMenuBook } from "react-icons/md";
 import { BiSolidDrink } from "react-icons/bi";
-import { IoHomeOutline } from "react-icons/io5";
 import Link from "next/link";
 import "@/app/home.css";
+
 const DashboardNav = () => {
   const [nav, setNav] = useState(false);
   const [show, handleShow] = useState(false);
@@ -30,18 +30,16 @@ const DashboardNav = () => {
   return (
     <div className="max-w-[1250px] mx-auto">
       <div
-        className="flex justify-between max-w-[1250px] mx-auto items-center p-4 z-10 transition-all duration-500 cursor-pointer
+        className="flex justify-between max-w-[1250px] mx-auto items-center p-4 z-10 transition-all duration-500 
        bg-blue-500 fixed w-full top-0 rounded-br-xl rounded-bl-xl"
       >
         <div className="flex justify-between w-full items-center">
           <div onClick={() => setNav(!nav)} className="cursor-pointer">
             <CiMenuFries size={30} className="text-white stroke-1  " />
           </div>
-          <Link href="/">
-            <h1 className="text-xl  sm:text-2xl font-bold lg:text-3xl text-white px-2 cursor-pointer flex ml-2 sm:ml-0">
+            <h1 className="text-xl  sm:text-2xl font-bold lg:text-3xl text-white px-2 flex ml-2 sm:ml-0">
               Admin<span className="font-bold"> &nbsp;Dashboard</span>
             </h1>
-          </Link>
         </div>
       </div>
       {/*Starting  Mobile Menu */}
@@ -101,6 +99,12 @@ const DashboardNav = () => {
               <li className="text-xl cursor-pointer py-4 flex items-center hover:bg-blue-500 hover:text-white/80 duration-500 hover:rounded-lg">
                 <MdOutlineMenuBook size={25} className="ml-4 mr-3" />
                 Menu
+              </li>
+            </Link>
+            <Link href="/pages/food-menu/new-food">
+              <li className="text-xl cursor-pointer py-4 flex items-center hover:bg-blue-500 hover:text-white/80 duration-500 hover:rounded-lg">
+                <IoFastFood size={25} className="ml-4 mr-3" />
+                New Food
               </li>
             </Link>
           </ul>

@@ -1,5 +1,6 @@
 import Collection from "@/components/shared/Collection";
 import {
+  createNewFood,
   getFoodById,
   getRelatedFoodByCategory,
 } from "@/lib/actions/food.actions";
@@ -7,9 +8,9 @@ import { SearchParamProps } from "@/types";
 import Image from "next/image";
 import newImg from "@/public/assets/images/JPG/new-img.jpg";
 import Link from "next/link";
-import { DeleteConfirmation } from "@/components/shared/DeleteConfirmation";
 import { SignedIn, SignedOut } from "@clerk/nextjs";
 import { IoChevronBackCircleOutline } from "react-icons/io5";
+import { FaArrowRightToBracket } from "react-icons/fa6";
 
 const formatPrice = (price: string) => {
   return price.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -20,7 +21,6 @@ const FoodDetails = async ({
   searchParams,
 }: SearchParamProps) => {
   const food = await getFoodById(id);
-
   const page = Number(searchParams?.page) || 1;
 
   const relatedFood = await getRelatedFoodByCategory({
@@ -28,6 +28,7 @@ const FoodDetails = async ({
     foodId: food._id,
     page: page,
   });
+ 
 
   return (
     <>
@@ -50,7 +51,19 @@ const FoodDetails = async ({
                   height={20}
                 />
               </Link>
-              <DeleteConfirmation foodId={food._id} />
+              <Link href={`/pages/food-menu`}>
+                <IoChevronBackCircleOutline
+                  size={23}
+                  className="text-blue-500 mt-1"
+                />
+              </Link>
+            </div>
+            <div className="absolute right-3 md:right-2 top-9 md:top-9 flex flex-col gap-[0.12rem] rounded-xl bg-white p-2 shadow-sm transition-all">
+              <Link href={`/dashboard/food/${food._id}/addNew`}>
+               <span className='text-blue-500'>
+                 <FaArrowRightToBracket size={19}/>
+               </span>
+              </Link>
               <Link href={`/pages/food-menu`}>
                 <IoChevronBackCircleOutline
                   size={23}
@@ -117,6 +130,8 @@ const FoodDetails = async ({
                         </button>
                       </Link>
                     </SignedOut>
+
+                    {/* } */}
                   </div>
 
                   <div className="flex justify-center items-center">
@@ -153,7 +168,7 @@ const FoodDetails = async ({
           emptyTitle="No Food Found"
           emptyStateSubtext="Add a Food"
           collectionType="All_Food"
-          limit={3}
+          limit={6}
           page={page}
           totalPages={relatedFood?.totalPages}
         />
