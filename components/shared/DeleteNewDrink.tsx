@@ -16,9 +16,9 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
-import { deleteFood } from "@/lib/actions/food.actions";
+import { deleteNewDrink } from "@/lib/actions/drink.actions";
 
-export const DeleteConfirmation = ({ foodId }: { foodId: string }) => {
+export const DeleteNewDrink = ({ drinkId }: { drinkId: string }) => {
   const pathname = usePathname();
   let [isPending, startTransition] = useTransition();
 
@@ -30,7 +30,7 @@ export const DeleteConfirmation = ({ foodId }: { foodId: string }) => {
           alt="delete"
           width={20}
           height={20}
-          className="mt-.7"
+          className="mt-.5"
         />
       </AlertDialogTrigger>
 
@@ -38,7 +38,7 @@ export const DeleteConfirmation = ({ foodId }: { foodId: string }) => {
         <AlertDialogHeader>
           <AlertDialogTitle>Are you sure you want to delete?</AlertDialogTitle>
           <AlertDialogDescription className=" text-gray-600">
-            This will permanently delete this food
+            This will no longer be new drink
           </AlertDialogDescription>
         </AlertDialogHeader>
 
@@ -48,7 +48,7 @@ export const DeleteConfirmation = ({ foodId }: { foodId: string }) => {
           <AlertDialogAction
             onClick={() =>
               startTransition(async () => {
-                await deleteFood({ foodId, path: pathname });
+                await deleteNewDrink({ drinkId, path: pathname });
               })
             }
             className="bg-blue-500"

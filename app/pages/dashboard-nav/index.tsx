@@ -91,10 +91,12 @@ const DashboardNav = () => {
                 Add Food
               </li>
             </Link>
+            <Link href="dashboard/drink/add">
             <li className="text-xl cursor-pointer py-4 flex items-center hover:bg-blue-500 hover:text-white/80 duration-500 hover:rounded-lg">
               <BiSolidDrink size={25} className="ml-4 mr-3" />
               Add Drink
             </li>
+            </Link>
             <Link href="/pages/food-menu">
               <li className="text-xl cursor-pointer py-4 flex items-center hover:bg-blue-500 hover:text-white/80 duration-500 hover:rounded-lg">
                 <MdOutlineMenuBook size={25} className="ml-4 mr-3" />

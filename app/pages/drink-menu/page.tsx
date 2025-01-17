@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { FoodMenuList } from ".";
+import { DrinkMenuList } from ".";
 import { SearchParamProps } from "@/types";
 import Tab from "@/src/components/tabs";
 import Image from "next/image";
@@ -16,14 +16,14 @@ const formatPrice = (price: string) => {
   return price.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
-const FoodMenu = ({ searchParams, params }: SearchParamProps) => {
+const DrinkMenu = ({ searchParams, params }: SearchParamProps) => {
   const [items, setItems] = useState<any[]>([]);
   const [itemList, setItemList] = useState<any[]>([]);
   const [show, handleShow] = useState(true);
   const [loading, setLoading] = useState(true);
   const [endAnimation, setEndAnimation] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [newFoodPopUp, setNewFoodPopUp] = useState(false);
+  const [newDrinkPopUp, setNewDrinkPopUp] = useState(false);
   let [isPending, setIsPending] = useState(false);
 
   const router = useRouter();
@@ -34,15 +34,15 @@ const FoodMenu = ({ searchParams, params }: SearchParamProps) => {
       !lastShownTime ||
       Date.now() - parseInt(lastShownTime) > 24 * 60 * 60 * 1000
     ) {
-      setNewFoodPopUp(true);
+      setNewDrinkPopUp(true);
     } else {
-      setNewFoodPopUp(false);
+      setNewDrinkPopUp(false);
     }
   }, []);
 
   const handleCloseModal = () => {
     localStorage.setItem("lastModalShowTime", Date.now().toString());
-    setNewFoodPopUp(false);
+    setNewDrinkPopUp(false);
   };
 
   const handleButtonClick = () => {
@@ -63,10 +63,9 @@ const FoodMenu = ({ searchParams, params }: SearchParamProps) => {
       window.removeEventListener("scroll", () => {});
     };
   }, [show]);
-  
 
   useEffect(() => {
-    const stopAnimation = localStorage.getItem("foodStopAnimationUntil");
+    const stopAnimation = localStorage.getItem("drinkStopAnimationUntil");
     const currentTime = Date.now();
     if (stopAnimation && parseInt(stopAnimation) > currentTime) {
       setEndAnimation(true);
@@ -87,7 +86,7 @@ const FoodMenu = ({ searchParams, params }: SearchParamProps) => {
 
   const handleClick = () => {
     localStorage.setItem(
-      "foodStopAnimationUntil",
+      "drinkStopAnimationUntil",
       `${Date.now() + 24 * 60 * 60 * 1000}`
     );
     setTimeout(() => {
@@ -101,7 +100,8 @@ const FoodMenu = ({ searchParams, params }: SearchParamProps) => {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const fetchedItems = await FoodMenuList({ searchParams, params });
+        const fetchedItems = await DrinkMenuList({ searchParams, params });
+        console.log(fetchedItems); 
         setItems(fetchedItems);
         setLoading(false);
 
@@ -121,7 +121,7 @@ const FoodMenu = ({ searchParams, params }: SearchParamProps) => {
                 key=""
                 className="text-2xl text-center text-gray-800 py-3 pb-1 font-bold"
               >
-                FOOD MENU
+                DRINK MENU
               </h1>
 
               <h1
@@ -132,29 +132,29 @@ const FoodMenu = ({ searchParams, params }: SearchParamProps) => {
               </h1>
             </div>,
 
-            ...item.foods.map((food: any, foodIndex: number) => (
-              <div key={foodIndex} className="max-w-[1100px] mx-auto">
-                <Link href={`/dashboard/food/${food._id}`}>
+            ...item.drinks.map((drink: any, drinkIndex: number) => (
+              <div key={drinkIndex} className="max-w-[1100px] mx-auto">
+                <Link href={`/dashboard/drink/${drink._id}`}>
                   <div className="mt-2 max-w-[900px] flex justify-between mx-auto items-start text-gray-700">
                     <div className="flex">
                       <Image
-                        src={food.imageUrl}
-                        alt="food-img"
+                        src={drink.imageUrl}
+                        alt="drink-img"
                         width={40}
                         height={40}
                         className={` w-[2rem] md:w-[3rem] h-[2rem] md:h-[3rem] rounded-full  mr-4`}
                       />
                       <div>
                         <p className="text-red-500 text-lg font-[700]">
-                          {food.foodName}
+                          {drink.drinkName}
                         </p>
                         <p className="max-w-[400px] text-base font-normal mt-2 leading-6">
-                          {food.description}
+                          {drink.description}
                         </p>
                       </div>
                     </div>
                     <p className="text-base font-[540]">
-                      ₦{formatPrice(food.price)}
+                      ₦{formatPrice(drink.price)}
                     </p>
                   </div>
                 </Link>
@@ -213,18 +213,18 @@ const FoodMenu = ({ searchParams, params }: SearchParamProps) => {
 
   return (
     <div>
-      {newFoodPopUp ? (
+      {newDrinkPopUp ? (
         <div>
           <div
             className={
-              newFoodPopUp
+              newDrinkPopUp
                 ? "fixed top-0 left-0 w-[100%]  h-screen bg-black/50 -z-10 duration-700 overflow-y-scroll"
                 : "fixed top-0 left-[-100%] w-[100%] h-screen bg-black/50 -z-10 duration-700 overflow-y-scroll delay-200"
             }
           ></div>
           <div
             className={
-              newFoodPopUp
+              newDrinkPopUp
                 ? "fixed top-0 left-0 w-[100%] md:w-[100%] h-screen bg-white z-10 duration-700 overflow-y-scroll delay-200 rounded-tr-3xl rounded-br-3xl"
                 : "fixed top-0 left-[-100%] w-[100%] md:w-[100%] h-screen bg-white z-10 duration-700 overflow-y-scroll"
             }
@@ -234,7 +234,7 @@ const FoodMenu = ({ searchParams, params }: SearchParamProps) => {
                 <div className="flex items-center justify-center">
                   <FaMessage size={30} />
                   <h1 className="text-xl font-semibold ml-3">
-                    Hey there Member!!!Check our our new food cataglog.
+                    Hey there Member!!!Check our our new drink cataglog.
                   </h1>
                 </div>
                 <div className="absolute bottom-0 right-1">
@@ -270,7 +270,7 @@ const FoodMenu = ({ searchParams, params }: SearchParamProps) => {
       ) : (
         <div className="flex flex-col lg:flex-row myDiv bg-gray-50 justify-between">
           <div className="max-w-[400px]">
-            <Link href="/pages/drink-menu">
+            <Link href="/pages/food-menu">
               <button
                 className={` bg-blue-600 tracking-wider px-5 md:px-6 lg:px-8 mx-3 my-2 py-2 md:py-3 lg:py-4 mt-3 rounded-lg cursor-pointer hover:bg-blue-700 text-white ${
                   !endAnimation && " slide-in-top"
@@ -280,7 +280,7 @@ const FoodMenu = ({ searchParams, params }: SearchParamProps) => {
                   handleClick();
                 }}
               >
-                Drink
+                Food
               </button>
             </Link>
             <span
@@ -301,4 +301,4 @@ const FoodMenu = ({ searchParams, params }: SearchParamProps) => {
   );
 };
 
-export default FoodMenu;
+export default DrinkMenu;

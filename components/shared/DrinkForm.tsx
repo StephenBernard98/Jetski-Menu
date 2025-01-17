@@ -10,10 +10,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { foodFormSchema } from "@/lib/Validator";
+import { drinkFormSchema } from "@/lib/DrinkValidator";
 import * as z from "zod";
-import { foodDefaultValues } from "@/constants";
-import Dropdown from "./Dropdown";
+import { drinkDefaultValues } from "@/constants/drinkIndex";
+import DrinkDropdown from "./DrinkDropdown";
 import { Textarea } from "@/components/ui/textarea";
 import { FileUploader } from "./FileUploader";
 import { useState, useEffect } from "react";
@@ -22,56 +22,56 @@ import "react-datepicker/dist/react-datepicker.css";
 import { Checkbox } from "../ui/checkbox";
 import { usePathname, useRouter } from "next/navigation";
 import {
-  createFood,
-  createNewFood,
-  updateFood,
-} from "@/lib/actions/food.actions";
-import { IFood } from "@/lib/database/models/food.model";
+  createDrink,
+  createNewDrink,
+  updateDrink,
+} from "@/lib/actions/drink.actions";
+import { IDrink } from "@/lib/database/models/drink.model";
 import Modal from "@/components/shared/Modal";
 import { ThreeCircles } from "react-loader-spinner";
 import { FaMessage } from "react-icons/fa6";
 import Link from "next/link";
 
-type FoodFormProps = {
+type DrinkFormProps = {
   userId: string;
   type: "Add" | "Edit" | "Add to New";
-  food?: IFood;
-  foodId?: string;
+  drink?: IDrink;
+  drinkId?: string;
 };
 
-const FoodForm = ({ userId, type, food, foodId }: FoodFormProps) => {
+const DrinkForm = ({ userId, type, drink, drinkId }: DrinkFormProps) => {
   const pathname = usePathname();
   const [files, setFiles] = useState<File[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [newFoodExistPopUp, setNewFoodExistPopUp] = useState(false);
+  const [newDrinkExistPopUp, setNewDrinkExistPopUp] = useState(false);
 
   useEffect(() => {
-    if (food && type === "Edit") {
-      document.title = "Edit Food";
-    } else if (food && type === "Add to New") {
-      document.title = "Add to New Food";
+    if (drink && type === "Edit") {
+      document.title = "Edit Drink";
+    } else if (drink && type === "Add to New") {
+      document.title = "Add to New Drink";
     } else {
-      document.title = "Add Food";
+      document.title = "Add Drink";
     }
     window.scrollTo(0, 0);
   }, []);
 
   const initialValues =
-    food && (type === "Edit" || type == "Add to New")
+    drink && (type === "Edit" || type == "Add to New")
       ? {
-          ...food,
+          ...drink,
         }
-      : foodDefaultValues;
+      : drinkDefaultValues;
   const router = useRouter();
 
   const { startUpload } = useUploadThing("imageUploader");
 
-  const form = useForm<z.infer<typeof foodFormSchema>>({
-    resolver: zodResolver(foodFormSchema),
+  const form = useForm<z.infer<typeof drinkFormSchema>>({
+    resolver: zodResolver(drinkFormSchema),
     defaultValues: initialValues,
   });
 
-  async function onSubmit(values: z.infer<typeof foodFormSchema>) {
+  async function onSubmit(values: z.infer<typeof drinkFormSchema>) {
     let uploadedImageUrl = values.imageUrl;
 
     if (files.length > 0) {
@@ -86,15 +86,15 @@ const FoodForm = ({ userId, type, food, foodId }: FoodFormProps) => {
 
     if (type === "Add") {
       try {
-        const newFood = await createFood({
-          food: { ...values, imageUrl: uploadedImageUrl },
+        const newDrink = await createDrink({
+          drink: { ...values, imageUrl: uploadedImageUrl },
           userId,
           path: "/dashboard",
         });
 
-        if (newFood) {
+        if (newDrink) {
           form.reset();
-          router.push(`/dashboard/food/${newFood._id}`);
+          router.push(`/dashboard/drink/${newDrink._id}`);
         }
       } catch (error) {
         console.log(error);
@@ -102,21 +102,21 @@ const FoodForm = ({ userId, type, food, foodId }: FoodFormProps) => {
     }
 
     if (type === "Edit") {
-      if (!foodId) {
+      if (!drinkId) {
         router.back();
         return;
       }
 
       try {
-        const updatedFood = await updateFood({
+        const updatedDrink = await updateDrink({
           userId,
-          food: { ...values, imageUrl: uploadedImageUrl, _id: foodId },
-          path: `/dashboard/food/${foodId}`,
+          drink: { ...values, imageUrl: uploadedImageUrl, _id: drinkId },
+          path: `/dashboard/drink/${drinkId}`,
         });
 
-        if (updatedFood) {
+        if (updatedDrink) {
           form.reset();
-          router.push(`/dashboard/food/${foodId}`);
+          router.push(`/dashboard/drink/${drinkId}`);
         }
       } catch (error) {
         console.log(error);
@@ -124,25 +124,25 @@ const FoodForm = ({ userId, type, food, foodId }: FoodFormProps) => {
     }
 
     if (type === "Add to New") {
-      if (!foodId) {
+      if (!drinkId) {
         router.back();
         return;
       }
 
       try {
-        const newFood = await createNewFood({
-          food: { ...values, _id: foodId },
-          path: "/food-menu/new-food",
+        const newDrink = await createNewDrink({
+          drink: { ...values, _id: drinkId },
+          path: "/drink-menu/new-drink",
         });
 
-        if (newFood) {
+        if (newDrink) {
           form.reset();
           setTimeout(() => {
-            router.push(`/pages/food-menu/new-food`);
+            router.push(`/pages/drink-menu/new-drink`);
           }, 1000);
         }
       } catch (error) {
-        setNewFoodExistPopUp(true);
+        setNewDrinkExistPopUp(true);
       }
     }
   }
@@ -160,12 +160,12 @@ const FoodForm = ({ userId, type, food, foodId }: FoodFormProps) => {
         <div className="flex flex-col items-center gap-5 md:flex-row">
           <FormField
             control={form.control}
-            name="foodName"
+            name="drinkName"
             render={({ field }) => (
               <FormItem className="w-full">
                 <FormControl>
                   <Input
-                    placeholder="Food Name"
+                    placeholder="Drink Name"
                     {...field}
                     className="bg-gray-100 p-5"
                   />
@@ -180,7 +180,7 @@ const FoodForm = ({ userId, type, food, foodId }: FoodFormProps) => {
             render={({ field }) => (
               <FormItem className="w-full text-gray-500">
                 <FormControl>
-                  <Dropdown
+                  <DrinkDropdown
                     onChangeHandler={field.onChange}
                     value={field.value}
                   />
@@ -264,7 +264,7 @@ const FoodForm = ({ userId, type, food, foodId }: FoodFormProps) => {
                       htmlFor="isNew"
                       className="whitespace-nowrap pr-3 text-gray-800 font-bold leading-none peer-disabled:cursor-not-allowed bg-gray-200 peer-disabled:opacity-70"
                     >
-                      New Food?
+                      New Drink?
                     </label>
                   </div>
                 </FormControl>
@@ -293,14 +293,14 @@ const FoodForm = ({ userId, type, food, foodId }: FoodFormProps) => {
               />
             </>
           ) : (
-            `${type} Food`
+            `${type} Drink`
           )}
         </Button>
       </form>
-      {newFoodExistPopUp && (
+      {newDrinkExistPopUp && (
         <div
           className={
-            newFoodExistPopUp
+            newDrinkExistPopUp
               ? "fixed top-0 left-0 w-[100%] md:w-[100%] h-screen bg-black/70 z-10 duration-700 overflow-y-scroll delay-200 rounded-tr-3xl rounded-br-3xl"
               : "fixed top-0 left-[-100%] w-[100%] md:w-[100%] h-screen bg-black/70 z-10 duration-700 overflow-y-scroll"
           }
@@ -310,18 +310,17 @@ const FoodForm = ({ userId, type, food, foodId }: FoodFormProps) => {
               <div className="flex items-center justify-center">
                 <FaMessage size={30} />
                 <h1 className="text-xl font-semibold ml-3">
-                  Already in New Food Section
+                  Already in New Drink Section
                 </h1>
               </div>
               <div className="relative">
                 <Link href="/dashboard">
-                
-                <Button className="mt-5 bg-black/90 hover:bg-black/80 text-white absolute right-2 mx-24">
-                  Dashboard
-                </Button>
+                  <Button className="mt-5 bg-black/90 hover:bg-black/80 text-white absolute right-2 mx-24">
+                    Dashboard
+                  </Button>
                 </Link>
                 <Button
-                  onClick={() => setNewFoodExistPopUp(false)} // Close the modal
+                  onClick={() => setNewDrinkExistPopUp(false)} // Close the modal
                   className="mt-5 bg-blue-600 hover:bg-blue-700 text-white absolute right-2"
                 >
                   Close
@@ -335,4 +334,4 @@ const FoodForm = ({ userId, type, food, foodId }: FoodFormProps) => {
   );
 };
 
-export default FoodForm;
+export default DrinkForm;

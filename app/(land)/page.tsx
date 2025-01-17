@@ -137,7 +137,7 @@ export default function Home() {
         <section className="flex relative flex-col h-full justify-center items-center">
           <div className="absolute top-2 right-3">
             {!showLogo && (
-              <div>
+              <div className="hidden xl:block">
                 <SignedOut>
                   <Link href="/sign-in">
                     <button
@@ -256,7 +256,7 @@ export default function Home() {
               </p>
             )}
             {!showLogo && (
-              <Link href="/dashboard">
+              <Link href="/pages/drink-menu">
                 <button
                   className={` bg-blue-600 tracking-wider px-12 py-4 mt-4 rounded-lg cursor-pointer hover:bg-blue-700 text-white ${
                     !endAnimation && "scale-in-center"
