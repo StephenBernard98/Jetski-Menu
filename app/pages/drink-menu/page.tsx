@@ -274,7 +274,7 @@ const DrinkMenu = ({ searchParams, params }: SearchParamProps) => {
                 <button
                   className={` bg-blue-600 tracking-wider px-2 md:px-4 lg:px-3 mx-1 my-2 py-2 md:py-2 lg:py-3 mt-4 rounded-lg cursor-pointer hover:bg-blue-700 text-white ${
                     !endAnimation && " slide-in-top"
-                  } duration-300  `}
+                  } duration-200  `}
                   onClick={() => {
                     load();
                     handleClick();
@@ -297,7 +297,7 @@ const DrinkMenu = ({ searchParams, params }: SearchParamProps) => {
                 <button
                   className={` bg-blue-600 tracking-wide px-2 md:px-4 lg:px-3 mx-1 my-2 py-2 md:py-2 lg:py-3 mt-4 rounded-lg cursor-pointer hover:bg-blue-700 text-white ${
                     !endAnimation && " slide-in-top"
-                  } duration-300  `}
+                  } duration-200  `}
                   onClick={() => {
                     load();
                     handleClick();

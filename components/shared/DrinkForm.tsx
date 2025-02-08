@@ -320,7 +320,7 @@ const DrinkForm = ({ userId, type, drink, drinkId }: DrinkFormProps) => {
                   </Button>
                 </Link>
                 <Button
-                  onClick={() => setNewDrinkExistPopUp(false)} // Close the modal
+                  onClick={() => setNewDrinkExistPopUp(false)} 
                   className="mt-5 bg-blue-600 hover:bg-blue-700 text-white absolute right-2"
                 >
                   Close

@@ -135,7 +135,7 @@ const FoodMenu = ({ searchParams, params }: SearchParamProps) => {
             ...item.foods.map((food: any, foodIndex: number) => (
               <div key={foodIndex} className="max-w-[1100px] mx-auto">
                 <Link href={`/dashboard/food/${food._id}`}>
-                  <div className="mt-2 max-w-[900px] flex justify-between mx-auto items-start text-gray-700">
+                  <div className="mt-2 max-w-[900px] flex justify-between mx-auto items-start text-gray-700 cursor-pointer">
                     <div className="flex">
                       <Image
                         src={food.imageUrl}
@@ -171,6 +171,8 @@ const FoodMenu = ({ searchParams, params }: SearchParamProps) => {
     };
     fetchItems();
   }, [searchParams, params]);
+
+  
 
   useEffect(() => {
     if (!loading && itemList.length === 0) {
@@ -275,7 +277,7 @@ const FoodMenu = ({ searchParams, params }: SearchParamProps) => {
                 <button
                   className={` bg-blue-600 tracking-wider px-2 md:px-4 lg:px-3 mx-1 my-2 py-2 md:py-2 lg:py-3 mt-4 rounded-lg cursor-pointer hover:bg-blue-700 text-white ${
                     !endAnimation && " slide-in-top"
-                  } duration-300  `}
+                  } duration-200  `}
                   onClick={() => {
                     load();
                     handleClick();
@@ -298,7 +300,7 @@ const FoodMenu = ({ searchParams, params }: SearchParamProps) => {
                 <button
                   className={` bg-blue-600 tracking-wide px-2 md:px-4 lg:px-3 mx-1 my-2 py-2 md:py-2 lg:py-3 mt-4 rounded-lg cursor-pointer hover:bg-blue-700 text-white ${
                     !endAnimation && " slide-in-top"
-                  } duration-300  `}
+                  } duration-200  `}
                   onClick={() => {
                     load();
                     handleClick();

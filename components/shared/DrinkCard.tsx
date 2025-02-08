@@ -57,13 +57,18 @@ const DrinkCard = ({ drink, isNewDrinkPage }: DrinkCardProps) => {
           </SignedIn>
         )}
       </div>
-
       <div className="flex min-h-[50px] w-full justify-between p-5 font-semibold md:gap-4">
-        <div className="flex items-center justify-between gap-2">
-          <p className="rounded-full bg-gray-500/10 px-4 py-1 text-gray-500 text-sm md:text-base">
-            {drink.category !== undefined && drink.category.name}
-          </p>
-          <p className="text-black">{drink.drinkName}</p>
+        <div className="flex flex-col items-center justify-between gap-2">
+          <div className="flex items-center justify-between gap-2">
+            <p className="rounded-full bg-gray-500/10 px-4 py-1 text-gray-500 text-sm md:text-base">
+              {drink.category !== undefined && drink.category.name}
+            </p>
+            <p className="text-black">{drink.drinkName}</p>
+          </div>
+          <p className="text-black text-sm md:text-base">{drink.description}</p>
+        </div>
+        <div>
+          <p className="text-black text-sm md:text-base">₦{drink.price}</p>
         </div>
       </div>
     </div>
