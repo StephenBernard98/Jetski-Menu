@@ -234,7 +234,7 @@ const FoodMenu = ({ searchParams, params }: SearchParamProps) => {
                 <div className="flex items-center justify-center">
                   <FaMessage size={30} />
                   <h1 className="text-xl font-semibold ml-3">
-                    Hey there Member!!!Check our our new food cataglog.
+                    Hey there Member!!! Check out our new food cataglog.
                   </h1>
                 </div>
                 <div className="absolute bottom-0 right-1">
@@ -268,29 +268,54 @@ const FoodMenu = ({ searchParams, params }: SearchParamProps) => {
           </div>
         </div>
       ) : (
-        <div className="flex flex-col lg:flex-row myDiv bg-gray-50 justify-between">
-          <div className="max-w-[400px]">
-            <Link href="/pages/drink-menu">
-              <button
-                className={` bg-blue-600 tracking-wider px-5 md:px-6 lg:px-8 mx-3 my-2 py-2 md:py-3 lg:py-4 mt-3 rounded-lg cursor-pointer hover:bg-blue-700 text-white ${
-                  !endAnimation && " slide-in-top"
-                } duration-300  `}
-                onClick={() => {
-                  load();
-                  handleClick();
-                }}
+        <div className="flex flex-col xl:flex-row myDiv bg-gray-50 justify-between">
+          <div className="flex">
+            <div className="max-w-[400px]">
+              <Link href="/pages/drink-menu">
+                <button
+                  className={` bg-blue-600 tracking-wider px-2 md:px-4 lg:px-3 mx-1 my-2 py-2 md:py-2 lg:py-3 mt-4 rounded-lg cursor-pointer hover:bg-blue-700 text-white ${
+                    !endAnimation && " slide-in-top"
+                  } duration-300  `}
+                  onClick={() => {
+                    load();
+                    handleClick();
+                  }}
+                >
+                  Drink
+                </button>
+              </Link>
+              <span
+                className={`text-3xl bg-blue-900 font-[900] rounded-full py-[14px] md:py-[10px] px-[25px] md:px-[21px] fixed bottom-3 right-3 cursor-pointer slide-in-blurred-top ${
+                  show && "hidden"
+                }`}
+                onClick={handleClickFired}
               >
-                Drink
-              </button>
-            </Link>
-            <span
-              className={`text-3xl bg-blue-900 font-[900] rounded-full py-[14px] md:py-[10px] px-[25px] md:px-[21px] fixed bottom-3 right-3 cursor-pointer slide-in-blurred-top ${
-                show && "hidden"
-              }`}
-              onClick={handleClickFired}
-            >
-              &#8593;
-            </span>
+                &#8593;
+              </span>
+            </div>
+            <div className="max-w-[400px]">
+              <Link href="/pages/food-menu/new-food">
+                <button
+                  className={` bg-blue-600 tracking-wide px-2 md:px-4 lg:px-3 mx-1 my-2 py-2 md:py-2 lg:py-3 mt-4 rounded-lg cursor-pointer hover:bg-blue-700 text-white ${
+                    !endAnimation && " slide-in-top"
+                  } duration-300  `}
+                  onClick={() => {
+                    load();
+                    handleClick();
+                  }}
+                >
+                  New Food
+                </button>
+              </Link>
+              <span
+                className={`text-3xl bg-blue-900 font-[900] rounded-full py-[14px] md:py-[10px] px-[25px] md:px-[21px] fixed bottom-3 right-3 cursor-pointer slide-in-blurred-top ${
+                  show && "hidden"
+                }`}
+                onClick={handleClickFired}
+              >
+                &#8593;
+              </span>
+            </div>
           </div>
           <div className=" md:max-w-[800px] lg:max-w-[1200px] myDiv text-gray-700 lg:flex-1 bg-gray-50 font-bold text-4xl p-3 right-0 ">
             <Tab defaultActiveKey="0" items={itemList} onChange={onChange} />

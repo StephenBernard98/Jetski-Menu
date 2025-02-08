@@ -2,6 +2,7 @@ import { getAllNewDrink } from "@/lib/actions/drink.actions";
 import { SearchParamProps } from "@/types";
 import DrinkCollection from "@/components/shared/DrinkCollection";
 import Link from "next/link";
+import { SignedIn, SignedOut } from "@clerk/nextjs";
 
 const NewDrink = async ({ searchParams }: SearchParamProps) => {
   const page = Number(searchParams?.page) || 1;
@@ -17,16 +18,30 @@ const NewDrink = async ({ searchParams }: SearchParamProps) => {
   return (
     <main className="max-w-[1250px] mx-auto">
       <div className="flex bg-blue-200 mb-5 mt-[1rem] rounded-xl items-center justify-between px-3 mx-1">
-        <Link href="/dashboard">
-          <div className="mt-5 bg-blue-600 hover:bg-blue-700 text-[1.1rem] text-white text-center mb-5 rounded-xl p-3">
-            Dashboard
-          </div>
-        </Link>
+        <div className="hidden xl:block">
+          <SignedIn>
+            <Link href="/dashboard">
+              <div className="mt-5 bg-blue-600 hover:bg-blue-700 text-[1.1rem] text-white text-center mb-5 rounded-xl p-3">
+                Dashboard
+              </div>
+            </Link>
+          </SignedIn>
+          <SignedOut>
+            <Link href="/pages/drink-menu">
+              <div className="mt-5 bg-blue-600 hover:bg-blue-700 text-[1.1rem] text-white text-center mb-5 rounded-xl py-3 px-6">
+                Back
+              </div>
+            </Link>
+          </SignedOut>
+        </div>
         <div className="font-bold text-center text-xl md:text-4xl p-3">
           New <span className="text-blue-600">Drink</span>
         </div>
       </div>
-      <section className="wrapper my-8 flex flex-col gap-8 md:gap-12" id="drink">
+      <section
+        className="wrapper my-8 flex flex-col gap-8 md:gap-12"
+        id="drink"
+      >
         <DrinkCollection
           data={drink?.data}
           emptyTitle="No Drink Found"

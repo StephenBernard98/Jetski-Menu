@@ -6,13 +6,13 @@ export default authMiddleware({
     "/dashboard/food/:id",
     "/pages/food-menu",
     "/pages/food-menu/new-food",
+    "/dashboard/drink/:id",
+    "/pages/drink-menu",
+    "/pages/drink-menu/new-drink",
     "/api/webhook/clerk",
     "/api/uploadthing",
   ],
-  ignoredRoutes: [
-    "/api/webhook/clerk",
-    "/api/uploadthing",
-  ],
+  ignoredRoutes: ["/api/webhook/clerk", "/api/uploadthing"],
 });
 
 export const config = {

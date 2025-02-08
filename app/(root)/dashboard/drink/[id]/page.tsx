@@ -41,34 +41,36 @@ const DrinkDetails = async ({
             className=" md:w-1/2 lg:w-full w-full min-h-[300px] object-cover object-center md:mr-2  rounded-lg"
           />
           <SignedIn>
-            <div className="absolute right-3 md:right-2 top-3 md:top-2 flex flex-col gap-[0.12rem] rounded-xl bg-white p-2 shadow-sm transition-all">
-              <Link href={`/dashboard/drink/${drink._id}/update`}>
-                <Image
-                  src="/assets/icons/edit.svg"
-                  alt="edit"
-                  width={20}
-                  height={20}
-                />
-              </Link>
-              <Link href={`/pages/drink-menu`}>
-                <IoChevronBackCircleOutline
-                  size={23}
-                  className="text-blue-500 mt-1"
-                />
-              </Link>
-            </div>
-            <div className="absolute right-3 md:right-2 top-9 md:top-9 flex flex-col gap-[0.12rem] rounded-xl bg-white p-2 shadow-sm transition-all">
-              <Link href={`/dashboard/drink/${drink._id}/addNew`}>
-                <span className="text-blue-500">
-                  <FaArrowRightToBracket size={19} />
-                </span>
-              </Link>
-              <Link href={`/pages/drink-menu`}>
-                <IoChevronBackCircleOutline
-                  size={23}
-                  className="text-blue-500 mt-1"
-                />
-              </Link>
+            <div className="hidden xl:block">
+              <div className="absolute right-3 md:right-2 top-3 md:top-2 flex flex-col gap-[0.12rem] rounded-xl bg-white p-2 shadow-sm transition-all">
+                <Link href={`/dashboard/drink/${drink._id}/update`}>
+                  <Image
+                    src="/assets/icons/edit.svg"
+                    alt="edit"
+                    width={20}
+                    height={20}
+                  />
+                </Link>
+                <Link href={`/pages/drink-menu`}>
+                  <IoChevronBackCircleOutline
+                    size={23}
+                    className="text-blue-500 mt-1"
+                  />
+                </Link>
+              </div>
+              <div className="absolute right-3 md:right-2 top-9 md:top-9 flex flex-col gap-[0.12rem] rounded-xl bg-white p-2 shadow-sm transition-all">
+                <Link href={`/dashboard/drink/${drink._id}/addNew`}>
+                  <span className="text-blue-500">
+                    <FaArrowRightToBracket size={19} />
+                  </span>
+                </Link>
+                <Link href={`/pages/drink-menu`}>
+                  <IoChevronBackCircleOutline
+                    size={23}
+                    className="text-blue-500 mt-1"
+                  />
+                </Link>
+              </div>
             </div>
           </SignedIn>
 

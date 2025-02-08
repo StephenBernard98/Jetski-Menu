@@ -1,7 +1,6 @@
-
 "use client";
 
-import { usePathname } from "next/navigation"; // Client-side hook to get pathname
+import { usePathname } from "next/navigation"; 
 import DrinkCard from "./DrinkCard";
 import Pagination from "./Pagination";
 import { IDrink } from "@/lib/database/models/drink.model";

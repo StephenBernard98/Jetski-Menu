@@ -6,6 +6,8 @@ import { IoClose, IoHomeOutline, IoFastFood } from "react-icons/io5";
 import Image from "next/image";
 import { MdOutlineFastfood, MdOutlineMenuBook } from "react-icons/md";
 import { BiSolidDrink } from "react-icons/bi";
+import { BsCupStraw } from "react-icons/bs"; 
+import { PiBowlFoodThin } from "react-icons/pi";
 import Link from "next/link";
 import "@/app/home.css";
 
@@ -37,9 +39,9 @@ const DashboardNav = () => {
           <div onClick={() => setNav(!nav)} className="cursor-pointer">
             <CiMenuFries size={30} className="text-white stroke-1  " />
           </div>
-            <h1 className="text-xl  sm:text-2xl font-bold lg:text-3xl text-white px-2 flex ml-2 sm:ml-0">
-              Admin<span className="font-bold"> &nbsp;Dashboard</span>
-            </h1>
+          <h1 className="text-xl  sm:text-2xl font-bold lg:text-3xl text-white px-2 flex ml-2 sm:ml-0">
+            Admin<span className="font-bold"> &nbsp;Dashboard</span>
+          </h1>
         </div>
       </div>
       {/*Starting  Mobile Menu */}
@@ -92,21 +94,33 @@ const DashboardNav = () => {
               </li>
             </Link>
             <Link href="dashboard/drink/add">
-            <li className="text-xl cursor-pointer py-4 flex items-center hover:bg-blue-500 hover:text-white/80 duration-500 hover:rounded-lg">
-              <BiSolidDrink size={25} className="ml-4 mr-3" />
-              Add Drink
-            </li>
+              <li className="text-xl cursor-pointer py-4 flex items-center hover:bg-blue-500 hover:text-white/80 duration-500 hover:rounded-lg">
+                <BiSolidDrink size={25} className="ml-4 mr-3" />
+                Add Drink
+              </li>
             </Link>
             <Link href="/pages/food-menu">
               <li className="text-xl cursor-pointer py-4 flex items-center hover:bg-blue-500 hover:text-white/80 duration-500 hover:rounded-lg">
                 <MdOutlineMenuBook size={25} className="ml-4 mr-3" />
-                Menu
+                Food Menu
+              </li>
+            </Link>
+            <Link href="/pages/drink-menu">
+              <li className="text-xl cursor-pointer py-4 flex items-center hover:bg-blue-500 hover:text-white/80 duration-500 hover:rounded-lg">
+                <MdOutlineMenuBook size={25} className="ml-4 mr-3" />
+                Drink Menu
               </li>
             </Link>
             <Link href="/pages/food-menu/new-food">
               <li className="text-xl cursor-pointer py-4 flex items-center hover:bg-blue-500 hover:text-white/80 duration-500 hover:rounded-lg">
-                <IoFastFood size={25} className="ml-4 mr-3" />
+                <PiBowlFoodThin size={25} className="ml-4 mr-3" />
                 New Food
+              </li>
+            </Link>
+            <Link href="/pages/drink-menu/new-drink">
+              <li className="text-xl cursor-pointer py-4 flex items-center hover:bg-blue-500 hover:text-white/80 duration-500 hover:rounded-lg">
+                <BsCupStraw size={25} className="ml-4 mr-3" />
+                New Drink
               </li>
             </Link>
           </ul>

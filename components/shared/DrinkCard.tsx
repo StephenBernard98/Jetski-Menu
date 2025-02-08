@@ -1,5 +1,5 @@
 import { IDrink } from "@/lib/database/models/drink.model";
-import { auth } from "@clerk/nextjs";
+import { useAuth } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import { SignedIn } from "@clerk/nextjs";
@@ -11,15 +11,32 @@ type DrinkCardProps = {
   isNewDrinkPage: boolean; // Prop to decide if we should hide the images
 };
 
-const Card = ({ drink, isNewDrinkPage }: DrinkCardProps) => {
+const DrinkCard = ({ drink, isNewDrinkPage }: DrinkCardProps) => {
+    const { isSignedIn } = useAuth(); 
+  
   return (
     <div className="relative flex min-h-[380px] w-full max-w-[400px] flex-col overflow-hidden rounded-xl bg-white shadow-md transition-all hover:shadow-lg md:min-h-[438px] mx-2 ">
-      <div
-        style={{ backgroundImage: `url(${drink.imageUrl})` }}
-        className="flex justify-center flex-grow bg-gray-50 bg-cover bg-center text-grey-500"
-      />
+      {!isNewDrinkPage ? (
+        <Link href={`/dashboard/drink/${drink._id}`}>
+          <div
+            style={{ backgroundImage: `url(${drink.imageUrl})` }}
+            className="flex justify-center flex-grow bg-gray-50 bg-cover bg-center text-grey-500 h-[250px] md:h-[350px]"
+          />
+        </Link>
+      ) : (
+        <div>
+          <div
+            style={{ backgroundImage: `url(${drink.imageUrl})` }}
+            className="flex justify-center flex-grow bg-gray-50 bg-cover bg-center text-grey-500 h-[250px] md:h-[350px]"
+          />
+        </div>
+      )}
 
-      <div className="absolute right-2 top-2 flex flex-col gap-[0.12rem] rounded-xl bg-white p-2 shadow-sm transition-all">
+      <div
+        className={`absolute right-2 top-2 hidden lx:flex flex-col gap-[0.12rem] rounded-xl p-2 shadow-sm transition-all  ${
+          isSignedIn ? "bg-white" : "bg-none"
+        }`}
+      >
         {!isNewDrinkPage ? (
           <SignedIn>
             <Link href={`/dashboard/drink/${drink._id}/update`}>
@@ -28,20 +45,16 @@ const Card = ({ drink, isNewDrinkPage }: DrinkCardProps) => {
                 alt="edit"
                 width={20}
                 height={20}
+                className="mb-2"
               />
             </Link>
-            <Link href={`/dashboard/drink/${drink._id}`}>
-              <Image
-                src="/assets/icons/link.svg"
-                alt="link"
-                width={20}
-                height={20}
-              />
-            </Link>
+
             <DeleteConfirmation foodId={drink._id} />
           </SignedIn>
         ) : (
-          <DeleteNewDrink drinkId={drink._id} />
+          <SignedIn>
+            <DeleteNewDrink drinkId={drink._id} />
+          </SignedIn>
         )}
       </div>
 
@@ -57,4 +70,4 @@ const Card = ({ drink, isNewDrinkPage }: DrinkCardProps) => {
   );
 };
 
-export default Card;
+export default DrinkCard;
