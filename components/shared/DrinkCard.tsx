@@ -33,7 +33,7 @@ const DrinkCard = ({ drink, isNewDrinkPage }: DrinkCardProps) => {
       )}
 
       <div
-        className={`absolute right-2 top-2 hidden lx:flex flex-col gap-[0.12rem] rounded-xl p-2 shadow-sm transition-all  ${
+        className={`absolute right-2 top-2 hidden xl:flex flex-col gap-[0.12rem] rounded-xl p-2 shadow-sm transition-all  ${
           isSignedIn ? "bg-white" : "bg-none"
         }`}
       >
